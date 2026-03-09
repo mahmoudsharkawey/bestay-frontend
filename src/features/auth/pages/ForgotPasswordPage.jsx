@@ -1,0 +1,35 @@
+import { Link } from 'react-router-dom'
+import { Loader2, Mail, KeyRound, ArrowLeft } from 'lucide-react'
+import { Button } from '@/shared/components/ui/button'
+import { Input } from '@/shared/components/ui/input'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form'
+import { useForgotPassword } from '@/features/auth/hooks/useForgotPassword'
+
+export default function ForgotPasswordPage() {
+  const { form, sendCode, isPending, t } = useForgotPassword()
+
+  return (
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl p-8 md:p-10" style={{ boxShadow: '0 4px 24px rgba(27, 61, 111, 0.10)' }}>
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 rounded-full bg-orange-light flex items-center justify-center"><KeyRound className="h-7 w-7 text-orange" /></div>
+          </div>
+          <h1 className="text-2xl font-bold text-navy text-center mb-1">{t('auth.forgotPasswordTitle')}</h1>
+          <p className="text-slate-500 text-sm text-center mb-8">{t('auth.forgotPasswordSub')}</p>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit((data) => sendCode(data))} className="space-y-4">
+              <FormField control={form.control} name="email" render={({ field }) => (
+                <FormItem><FormLabel className="text-sm font-medium text-slate-700">{t('auth.email')}</FormLabel><FormControl><div className="relative"><Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" /><Input type="email" placeholder="john@example.com" className="pl-10 h-11 rounded-lg border-slate-200" {...field} /></div></FormControl><FormMessage /></FormItem>
+              )} />
+              <Button type="submit" className="w-full h-11 rounded-lg bg-orange hover:bg-orange-hover text-white font-semibold text-sm" disabled={isPending}>
+                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{t('auth.sendResetCode')}
+              </Button>
+            </form>
+          </Form>
+          <div className="text-center mt-6"><Link to="/login" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-navy transition-colors"><ArrowLeft className="h-4 w-4" /> {t('auth.backToLogin')}</Link></div>
+        </div>
+      </div>
+    </div>
+  )
+}

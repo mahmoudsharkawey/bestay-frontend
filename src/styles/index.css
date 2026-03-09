@@ -1,0 +1,88 @@
+/* ─── Google Fonts: Inter ──────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy: #1b3d6f;
+  --color-navy-dark: #152e55;
+  --color-orange: #f5a014;
+  --color-orange-hover: #e08e0d;
+  --color-orange-light: #fef3e2;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --shadow-navy: 0 4px 24px rgba(27, 61, 111, 0.1);
+  --shadow-navy-sm: 0 2px 12px rgba(27, 61, 111, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+@layer base {
+  :root {
+    --font-sans: "Inter", system-ui, sans-serif;
+    --background: 0 0% 98%;
+    --foreground: 215 28% 17%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 28% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 28% 17%;
+    --primary: 32 91% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 60% 27%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 215 28% 17%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 32 91% 52%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 215 28% 5%;
+    --foreground: 210 40% 98%;
+    --card: 215 28% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 215 28% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 32 91% 52%;
+    --primary-foreground: 215 28% 17%;
+    --secondary: 214 60% 27%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 32 91% 52%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: "Inter", system-ui, sans-serif;
+  }
+}

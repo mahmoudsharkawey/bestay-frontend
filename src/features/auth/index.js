@@ -1,0 +1,12 @@
+// Auth feature — public exports
+export { useLogin } from "./hooks/useLogin";
+export { useRegister } from "./hooks/useRegister";
+export { useForgotPassword } from "./hooks/useForgotPassword";
+export { useVerifyResetCode } from "./hooks/useVerifyResetCode";
+export { useResetPassword } from "./hooks/useResetPassword";
+export { authService } from "./services/auth.api";
+export { loginSchema } from "./schemas/login.schema";
+export { registerSchema } from "./schemas/register.schema";
+export { forgotPasswordSchema } from "./schemas/forgot-password.schema";
+export { verifyCodeSchema } from "./schemas/verify-code.schema";
+export { resetPasswordSchema } from "./schemas/reset-password.schema";
