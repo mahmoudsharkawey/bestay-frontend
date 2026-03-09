@@ -21,3 +21,10 @@ export function AdminRoute() {
   if (user?.role !== "ADMIN") return <Navigate to="/" replace />;
   return <Outlet />;
 }
+
+export function LandlordRoute() {
+  const { isAuthenticated, user } = useAuthStore();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (user?.role !== "LANDLORD") return <Navigate to="/" replace />;
+  return <Outlet />;
+}

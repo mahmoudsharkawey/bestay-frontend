@@ -1,59 +1,81 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { useAuthStore } from '@/shared/stores/auth.store'
-import { useUiStore } from '@/shared/stores/ui.store'
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar'
-import { Button } from '@/shared/components/ui/button'
-import { Menu, X, Globe, ChevronDown, User, CalendarDays, MapPin, CreditCard, LogOut, Settings } from 'lucide-react'
-import { useState, useRef, useEffect } from 'react'
-import Logo from '@/shared/components/layout/Logo'
-import { getInitials } from '@/shared/utils/user'
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useAuthStore } from "@/shared/stores/auth.store";
+import { useUiStore } from "@/shared/stores/ui.store";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
+import { Button } from "@/shared/components/ui/button";
+import {
+  Menu,
+  X,
+  Globe,
+  ChevronDown,
+  User,
+  CalendarDays,
+  MapPin,
+  CreditCard,
+  LogOut,
+  Settings,
+  Building2,
+  Plus,
+} from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import Logo from "@/shared/components/layout/Logo";
+import { getInitials } from "@/shared/utils/user";
 
 export default function Navbar() {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { isAuthenticated, user, logout } = useAuthStore()
-  const { language, setLanguage } = useUiStore()
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const dropdownRef = useRef(null)
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuthStore();
+  const { language, setLanguage } = useUiStore();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const initials = getInitials(user?.name)
+  const initials = getInitials(user?.name);
 
   const navLinkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors hover:text-orange ${
-      isActive ? 'text-navy' : 'text-slate-500'
-    }`
+      isActive ? "text-navy" : "text-slate-500"
+    }`;
 
-  const toggleLang = () => setLanguage(language === 'en' ? 'ar' : 'en')
+  const toggleLang = () => setLanguage(language === "en" ? "ar" : "en");
 
   useEffect(() => {
     const handleClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false)
+        setDropdownOpen(false);
       }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   const handleLogout = () => {
-    logout()
-    setDropdownOpen(false)
-    setMobileOpen(false)
-    navigate('/login')
-  }
+    logout();
+    setDropdownOpen(false);
+    setMobileOpen(false);
+    navigate("/login");
+  };
+
+  const isLandlord = user?.role === "LANDLORD";
 
   const dropdownLinks = [
-    { to: '/profile', icon: User, label: t('nav.myProfile') },
-    { to: '/bookings', icon: CalendarDays, label: t('nav.myBookings') },
-    { to: '/visits', icon: MapPin, label: t('nav.myVisits') },
-    { to: '/payments', icon: CreditCard, label: t('nav.payments') },
-    { to: '/profile', icon: Settings, label: t('nav.settings') },
-  ]
+    { to: "/profile", icon: User, label: t("nav.myProfile") },
+    { to: "/bookings", icon: CalendarDays, label: t("nav.myBookings") },
+    { to: "/visits", icon: MapPin, label: t("nav.myVisits") },
+    { to: "/payments", icon: CreditCard, label: t("nav.payments") },
+    { to: "/profile", icon: Settings, label: t("nav.settings") },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-slate-100" style={{ boxShadow: '0 1px 4px rgba(27, 61, 111, 0.06)' }}>
+    <header
+      className="sticky top-0 z-50 bg-white border-b border-slate-100"
+      style={{ boxShadow: "0 1px 4px rgba(27, 61, 111, 0.06)" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Logo size="lg" showText={false} />
@@ -61,14 +83,41 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-6">
             {isAuthenticated ? (
               <>
-                <NavLink to="/units" className={navLinkClass}>{t('nav.explore')}</NavLink>
-                <NavLink to="/bookings" className={navLinkClass}>{t('nav.bookings')}</NavLink>
-                <NavLink to="/visits" className={navLinkClass}>{t('nav.visits')}</NavLink>
+                <NavLink to="/units" className={navLinkClass}>
+                  {t("nav.explore")}
+                </NavLink>
+                <NavLink to="/bookings" className={navLinkClass}>
+                  {t("nav.bookings")}
+                </NavLink>
+                <NavLink to="/visits" className={navLinkClass}>
+                  {t("nav.visits")}
+                </NavLink>
+                {isLandlord && (
+                  <>
+                    <NavLink to="/landlord" className={navLinkClass}>
+                      {t("nav.myDashboard")}
+                    </NavLink>
+                    <NavLink to="/units/my" className={navLinkClass}>
+                      {t("nav.myUnits")}
+                    </NavLink>
+                    <NavLink
+                      to="/units/new"
+                      className="flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 bg-orange hover:bg-orange-hover text-white rounded-lg transition-colors"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      {t("units.addUnit")}
+                    </NavLink>
+                  </>
+                )}
               </>
             ) : (
               <>
-                <NavLink to="/units" className={navLinkClass}>{t('nav.findHousing')}</NavLink>
-                <NavLink to="/" className={navLinkClass}>{t('nav.universities')}</NavLink>
+                <NavLink to="/units" className={navLinkClass}>
+                  {t("nav.findHousing")}
+                </NavLink>
+                <NavLink to="/" className={navLinkClass}>
+                  {t("nav.universities")}
+                </NavLink>
               </>
             )}
           </nav>
@@ -79,7 +128,7 @@ export default function Navbar() {
               className="flex items-center gap-1 text-sm text-slate-500 hover:text-navy transition-colors px-2 py-1.5 rounded-lg hover:bg-slate-50"
             >
               <Globe className="h-4 w-4" />
-              <span>{language === 'en' ? 'AR' : 'EN'}</span>
+              <span>{language === "en" ? "AR" : "EN"}</span>
             </button>
 
             {isAuthenticated ? (
@@ -90,20 +139,30 @@ export default function Navbar() {
                 >
                   <Avatar className="h-9 w-9 border-2 border-slate-100">
                     <AvatarImage src={user?.picture} alt={user?.name} />
-                    <AvatarFallback className="text-xs bg-orange-light text-orange font-semibold">{initials}</AvatarFallback>
+                    <AvatarFallback className="text-xs bg-orange-light text-orange font-semibold">
+                      {initials}
+                    </AvatarFallback>
                   </Avatar>
-                  <span className="text-sm font-medium text-navy hidden lg:block max-w-[120px] truncate">{user?.name}</span>
-                  <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="text-sm font-medium text-navy hidden lg:block max-w-[120px] truncate">
+                    {user?.name}
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
 
                 {dropdownOpen && (
                   <div
                     className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-slate-100 py-2"
-                    style={{ boxShadow: '0 8px 32px rgba(27, 61, 111, 0.12)' }}
+                    style={{ boxShadow: "0 8px 32px rgba(27, 61, 111, 0.12)" }}
                   >
                     <div className="px-4 py-3 border-b border-slate-100">
-                      <p className="text-sm font-semibold text-navy truncate">{user?.name}</p>
-                      <p className="text-xs text-slate-400 truncate">{user?.email}</p>
+                      <p className="text-sm font-semibold text-navy truncate">
+                        {user?.name}
+                      </p>
+                      <p className="text-xs text-slate-400 truncate">
+                        {user?.email}
+                      </p>
                     </div>
                     <div className="py-1">
                       {dropdownLinks.map(({ to, icon: Icon, label }) => (
@@ -124,7 +183,7 @@ export default function Navbar() {
                         className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-danger hover:bg-danger/5 transition-colors"
                       >
                         <LogOut className="h-4 w-4" />
-                        {t('common.logOut')}
+                        {t("common.logOut")}
                       </button>
                     </div>
                   </div>
@@ -133,13 +192,16 @@ export default function Navbar() {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outline" className="h-9 rounded-lg border-navy text-navy hover:bg-navy hover:text-white text-sm font-medium">
-                    {t('nav.logIn')}
+                  <Button
+                    variant="outline"
+                    className="h-9 rounded-lg border-navy text-navy hover:bg-navy hover:text-white text-sm font-medium"
+                  >
+                    {t("nav.logIn")}
                   </Button>
                 </Link>
                 <Link to="/register">
                   <Button className="h-9 rounded-lg bg-orange hover:bg-orange-hover text-white text-sm font-semibold">
-                    {t('nav.signUp')}
+                    {t("nav.signUp")}
                   </Button>
                 </Link>
               </>
@@ -150,7 +212,11 @@ export default function Navbar() {
             className="md:hidden p-2 text-slate-600 hover:text-navy"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
 
@@ -161,19 +227,62 @@ export default function Navbar() {
                 <div className="flex items-center gap-3 px-3 py-3 mb-2">
                   <Avatar className="h-10 w-10 border-2 border-slate-100">
                     <AvatarImage src={user?.picture} alt={user?.name} />
-                    <AvatarFallback className="text-xs bg-orange-light text-orange font-semibold">{initials}</AvatarFallback>
+                    <AvatarFallback className="text-xs bg-orange-light text-orange font-semibold">
+                      {initials}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-navy truncate">{user?.name}</p>
-                    <p className="text-xs text-slate-400 truncate">{user?.email}</p>
+                    <p className="text-sm font-semibold text-navy truncate">
+                      {user?.name}
+                    </p>
+                    <p className="text-xs text-slate-400 truncate">
+                      {user?.email}
+                    </p>
                   </div>
                 </div>
                 <div className="border-t border-slate-100 pt-2">
-                  <NavLink to="/units" className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50" onClick={() => setMobileOpen(false)}>
-                    {t('nav.explore')}
+                  <NavLink
+                    to="/units"
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {t("nav.explore")}
                   </NavLink>
+                  {isLandlord && (
+                    <>
+                      <NavLink
+                        to="/landlord"
+                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <Building2 className="h-4 w-4 text-slate-400" />
+                        {t("nav.myDashboard")}
+                      </NavLink>
+                      <NavLink
+                        to="/units/my"
+                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <Building2 className="h-4 w-4 text-slate-400" />
+                        {t("nav.myUnits")}
+                      </NavLink>
+                      <NavLink
+                        to="/units/new"
+                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-orange rounded-lg hover:bg-orange/5"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <Plus className="h-4 w-4" />
+                        {t("units.addUnit")}
+                      </NavLink>
+                    </>
+                  )}
                   {dropdownLinks.map(({ to, icon: Icon, label }) => (
-                    <NavLink key={label} to={to} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50" onClick={() => setMobileOpen(false)}>
+                    <NavLink
+                      key={label}
+                      to={to}
+                      className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50"
+                      onClick={() => setMobileOpen(false)}
+                    >
                       <Icon className="h-4 w-4 text-slate-400" />
                       {label}
                     </NavLink>
@@ -185,21 +294,32 @@ export default function Navbar() {
                     className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium text-danger rounded-lg hover:bg-danger/5"
                   >
                     <LogOut className="h-4 w-4" />
-                    {t('common.logOut')}
+                    {t("common.logOut")}
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <NavLink to="/units" className="block px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50" onClick={() => setMobileOpen(false)}>
-                  {t('nav.findHousing')}
+                <NavLink
+                  to="/units"
+                  className="block px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-50"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("nav.findHousing")}
                 </NavLink>
                 <div className="pt-2 flex flex-col gap-2 px-3">
                   <Link to="/login" onClick={() => setMobileOpen(false)}>
-                    <Button variant="outline" className="w-full h-10 rounded-lg border-navy text-navy">{t('nav.logIn')}</Button>
+                    <Button
+                      variant="outline"
+                      className="w-full h-10 rounded-lg border-navy text-navy"
+                    >
+                      {t("nav.logIn")}
+                    </Button>
                   </Link>
                   <Link to="/register" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full h-10 rounded-lg bg-orange hover:bg-orange-hover text-white font-semibold">{t('nav.signUp')}</Button>
+                    <Button className="w-full h-10 rounded-lg bg-orange hover:bg-orange-hover text-white font-semibold">
+                      {t("nav.signUp")}
+                    </Button>
                   </Link>
                 </div>
               </>
@@ -209,11 +329,11 @@ export default function Navbar() {
               className="flex items-center gap-1 px-3 py-2 text-sm text-slate-500 hover:text-navy"
             >
               <Globe className="h-4 w-4" />
-              {language === 'en' ? 'العربية' : 'English'}
+              {language === "en" ? "العربية" : "English"}
             </button>
           </div>
         )}
       </div>
     </header>
-  )
+  );
 }

@@ -1,31 +1,39 @@
-import { createBrowserRouter } from 'react-router-dom'
-import MainLayout from '@/shared/components/layout/MainLayout'
-import AuthLayout from '@/shared/components/layout/AuthLayout'
-import AdminLayout from '@/shared/components/layout/AdminLayout'
-import { ProtectedRoute, GuestRoute, AdminRoute } from '@/shared/guards/RouteGuards'
+import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "@/shared/components/layout/MainLayout";
+import AuthLayout from "@/shared/components/layout/AuthLayout";
+import AdminLayout from "@/shared/components/layout/AdminLayout";
+import {
+  ProtectedRoute,
+  GuestRoute,
+  AdminRoute,
+  LandlordRoute,
+} from "@/shared/guards/RouteGuards";
 
 // Feature pages
-import HomePage from '@/features/home/pages/HomePage'
-import LoginPage from '@/features/auth/pages/LoginPage'
-import RegisterPage from '@/features/auth/pages/RegisterPage'
-import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage'
-import VerifyResetCodePage from '@/features/auth/pages/VerifyResetCodePage'
-import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage'
-import UnitsPage from '@/features/units/pages/UnitsPage'
-import UnitDetailPage from '@/features/units/pages/UnitDetailPage'
-import BookingsPage from '@/features/bookings/pages/BookingsPage'
-import ProfilePage from '@/features/profile/pages/ProfilePage'
-import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage'
-import NotFoundPage from '@/shared/components/layout/NotFoundPage'
+import HomePage from "@/features/home/pages/HomePage";
+import LoginPage from "@/features/auth/pages/LoginPage";
+import RegisterPage from "@/features/auth/pages/RegisterPage";
+import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage";
+import VerifyResetCodePage from "@/features/auth/pages/VerifyResetCodePage";
+import ResetPasswordPage from "@/features/auth/pages/ResetPasswordPage";
+import UnitsPage from "@/features/units/pages/UnitsPage";
+import UnitDetailPage from "@/features/units/pages/UnitDetailPage";
+import MyUnitsPage from "@/features/units/pages/MyUnitsPage";
+import CreateEditUnitPage from "@/features/units/pages/CreateEditUnitPage";
+import BookingsPage from "@/features/bookings/pages/BookingsPage";
+import ProfilePage from "@/features/profile/pages/ProfilePage";
+import AdminDashboardPage from "@/features/admin/pages/AdminDashboardPage";
+import LandlordDashboard from "@/features/landlord/pages/LandlordDashboard";
+import NotFoundPage from "@/shared/components/layout/NotFoundPage";
 
 export const router = createBrowserRouter([
   // Public routes (MainLayout)
   {
     element: <MainLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/units', element: <UnitsPage /> },
-      { path: '/units/:id', element: <UnitDetailPage /> },
+      { path: "/", element: <HomePage /> },
+      { path: "/units", element: <UnitsPage /> },
+      { path: "/units/:id", element: <UnitDetailPage /> },
     ],
   },
 
@@ -36,8 +44,11 @@ export const router = createBrowserRouter([
       {
         element: <MainLayout />,
         children: [
-          { path: '/bookings', element: <BookingsPage /> },
-          { path: '/profile', element: <ProfilePage /> },
+          { path: "/bookings", element: <BookingsPage /> },
+          { path: "/profile", element: <ProfilePage /> },
+          { path: "/units/my", element: <MyUnitsPage /> },
+          { path: "/units/new", element: <CreateEditUnitPage /> },
+          { path: "/units/:id/edit", element: <CreateEditUnitPage /> },
         ],
       },
     ],
@@ -50,11 +61,11 @@ export const router = createBrowserRouter([
       {
         element: <AuthLayout />,
         children: [
-          { path: '/login', element: <LoginPage /> },
-          { path: '/register', element: <RegisterPage /> },
-          { path: '/forgot-password', element: <ForgotPasswordPage /> },
-          { path: '/verify-reset-code', element: <VerifyResetCodePage /> },
-          { path: '/reset-password', element: <ResetPasswordPage /> },
+          { path: "/login", element: <LoginPage /> },
+          { path: "/register", element: <RegisterPage /> },
+          { path: "/forgot-password", element: <ForgotPasswordPage /> },
+          { path: "/verify-reset-code", element: <VerifyResetCodePage /> },
+          { path: "/reset-password", element: <ResetPasswordPage /> },
         ],
       },
     ],
@@ -65,15 +76,24 @@ export const router = createBrowserRouter([
     element: <AdminRoute />,
     children: [
       {
-        path: '/admin',
+        path: "/admin",
         element: <AdminLayout />,
-        children: [
-          { index: true, element: <AdminDashboardPage /> },
-        ],
+        children: [{ index: true, element: <AdminDashboardPage /> }],
+      },
+    ],
+  },
+
+  // Landlord routes (LANDLORD role required)
+  {
+    element: <LandlordRoute />,
+    children: [
+      {
+        element: <MainLayout />,
+        children: [{ path: "/landlord", element: <LandlordDashboard /> }],
       },
     ],
   },
 
   // 404
-  { path: '*', element: <NotFoundPage /> },
-])
+  { path: "*", element: <NotFoundPage /> },
+]);
