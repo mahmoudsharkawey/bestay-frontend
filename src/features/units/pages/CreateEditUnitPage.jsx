@@ -18,7 +18,7 @@ const STEPS = [
 
 function CreateEditForm({ mode, unit }) {
   const { t } = useTranslation();
-  const { form, step, totalSteps, nextStep, prevStep, onSubmit, isPending } =
+  const { form, step, totalSteps, nextSt0ep, prevStep, submitForm, isPending } =
     useCreateEditUnit({ mode, unit });
 
   return (
@@ -68,7 +68,8 @@ function CreateEditForm({ mode, unit }) {
         {/* Form card */}
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
           <Form {...form}>
-            <form onSubmit={onSubmit} className="space-y-6">
+            {/* form onSubmit is disabled — submit is triggered only via explicit button click */}
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
               {step === 1 && <UnitStepBasicInfo form={form} />}
               {step === 2 && <UnitStepDetails form={form} />}
               {step === 3 && <UnitStepMedia form={form} />}
@@ -95,8 +96,9 @@ function CreateEditForm({ mode, unit }) {
                   </Button>
                 ) : (
                   <Button
-                    type="submit"
+                    type="button"
                     disabled={isPending}
+                    onClick={submitForm}
                     className="flex-1 bg-orange hover:bg-orange-hover text-white rounded-xl h-11"
                   >
                     {isPending && (
@@ -135,5 +137,9 @@ export default function CreateEditUnitPage() {
       </div>
     );
 
-  return <CreateEditForm mode={mode} unit={data?.data?.unit || null} />;
+  // Support multiple response shapes (same as useUnitDetail)
+  const rawData = data?.data;
+  const unit = rawData?.unit ?? (rawData?.id ? rawData : null);
+
+  return <CreateEditForm mode={mode} unit={unit} />;
 }

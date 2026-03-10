@@ -17,7 +17,7 @@ export default function UnitGallery({ images = [] }) {
   return (
     <>
       {/* Main gallery */}
-      <div className="grid grid-cols-4 gap-2 h-80 rounded-2xl overflow-hidden">
+      <div className="grid grid-cols-4 gap-2 h-96 rounded-2xl overflow-hidden">
         {/* Main large image */}
         <div
           className="col-span-2 row-span-2 relative cursor-pointer group"

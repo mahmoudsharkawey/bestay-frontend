@@ -14,6 +14,20 @@ import {
 const TOTAL_STEPS = 3;
 
 /**
+ * Remove empty strings, undefined, and empty arrays from the data
+ * so we only send actually changed values to the backend on edit.
+ */
+function cleanPayload(data) {
+  return Object.fromEntries(
+    Object.entries(data).filter(([, v]) => {
+      if (v === "" || v === null || v === undefined) return false;
+      if (Array.isArray(v) && v.length === 0) return false;
+      return true;
+    }),
+  );
+}
+
+/**
  * Hook for the multi-step create/edit unit form.
  * @param {{ mode: 'create'|'edit', unit?: object }} options
  */
@@ -63,15 +77,18 @@ export function useCreateEditUnit({ mode = "create", unit = null } = {}) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data) =>
-      mode === "edit"
-        ? unitsService.updateUnit(unit.id, data)
-        : unitsService.createUnit(data),
+    mutationFn: (data) => {
+      const payload = mode === "edit" ? cleanPayload(data) : data;
+      return mode === "edit"
+        ? unitsService.updateUnit(unit.id, payload)
+        : unitsService.createUnit(payload);
+    },
     onSuccess: () => {
       toast.success(
         mode === "edit" ? t("units.updateSuccess") : t("units.createSuccess"),
       );
       queryClient.invalidateQueries({ queryKey: ["my-units"] });
+      queryClient.invalidateQueries({ queryKey: ["unit", unit?.id] });
       navigate("/units/my");
     },
     onError: (err) => {
@@ -80,7 +97,6 @@ export function useCreateEditUnit({ mode = "create", unit = null } = {}) {
   });
 
   const nextStep = async () => {
-    // Validate only relevant fields per step
     const stepFields = {
       1: ["title", "description", "city", "address", "university", "price"],
       2: ["roomType", "genderType"],
@@ -92,7 +108,9 @@ export function useCreateEditUnit({ mode = "create", unit = null } = {}) {
 
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
-  const onSubmit = form.handleSubmit((data) => mutate(data));
+  // Explicit submit — called only from the final step's button click
+  // NOT from a form submit event, so no accidental triggers are possible
+  const submitForm = () => form.handleSubmit((data) => mutate(data))();
 
   return {
     form,
@@ -100,7 +118,7 @@ export function useCreateEditUnit({ mode = "create", unit = null } = {}) {
     totalSteps: TOTAL_STEPS,
     nextStep,
     prevStep,
-    onSubmit,
+    submitForm,
     isPending,
     mode,
   };
