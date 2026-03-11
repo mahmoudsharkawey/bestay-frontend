@@ -21,10 +21,13 @@ import {
   Settings,
   Building2,
   Plus,
+  Bell,
+  Heart,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import Logo from "@/shared/components/layout/Logo";
 import { getInitials } from "@/shared/utils/user";
+import { useNotifications } from "@/features/notifications/hooks/useNotifications";
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -34,6 +37,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const { unreadCount } = useNotifications();
 
   const initials = getInitials(user?.name);
 
@@ -62,13 +67,30 @@ export default function Navbar() {
   };
 
   const isLandlord = user?.role === "LANDLORD";
+  const isUser = user?.role === "USER";
 
   const dropdownLinks = [
     { to: "/profile", icon: User, label: t("nav.myProfile") },
-    { to: "/bookings", icon: CalendarDays, label: t("nav.myBookings") },
+    ...(isUser
+      ? [{ to: "/favorites", icon: Heart, label: t("nav.myFavorites") }]
+      : []),
     { to: "/visits", icon: MapPin, label: t("nav.myVisits") },
-    { to: "/payments", icon: CreditCard, label: t("nav.payments") },
-    { to: "/profile", icon: Settings, label: t("nav.settings") },
+    { to: "/bookings", icon: CalendarDays, label: t("nav.myBookings") },
+    ...(isLandlord
+      ? [
+          { to: "/units/my", icon: Building2, label: t("nav.myUnits") },
+          { to: "/units/new", icon: Plus, label: t("units.addUnit") },
+        ]
+      : []),
+    ...(isUser
+      ? [
+          {
+            to: "/payments/history",
+            icon: CreditCard,
+            label: t("nav.payments"),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -89,24 +111,24 @@ export default function Navbar() {
                 <NavLink to="/bookings" className={navLinkClass}>
                   {t("nav.bookings")}
                 </NavLink>
-                <NavLink to="/visits" className={navLinkClass}>
+                {/* <NavLink to="/visits" className={navLinkClass}>
                   {t("nav.visits")}
-                </NavLink>
+                </NavLink> */}
                 {isLandlord && (
                   <>
                     <NavLink to="/landlord" className={navLinkClass}>
                       {t("nav.myDashboard")}
                     </NavLink>
-                    <NavLink to="/units/my" className={navLinkClass}>
+                    {/* <NavLink to="/units/my" className={navLinkClass}>
                       {t("nav.myUnits")}
-                    </NavLink>
-                    <NavLink
+                    </NavLink> */}
+                    {/* <NavLink
                       to="/units/new"
                       className="flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 bg-orange hover:bg-orange-hover text-white rounded-lg transition-colors"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       {t("units.addUnit")}
-                    </NavLink>
+                    </NavLink> */}
                   </>
                 )}
               </>
@@ -132,62 +154,78 @@ export default function Navbar() {
             </button>
 
             {isAuthenticated ? (
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-slate-50 transition-colors"
+              <div className="flex items-center gap-3">
+                {/* Notifications Bell */}
+                <Link
+                  to="/notifications"
+                  className="relative p-2 text-slate-500 hover:text-navy hover:bg-slate-50 rounded-full transition-colors"
                 >
-                  <Avatar className="h-9 w-9 border-2 border-slate-100">
-                    <AvatarImage src={user?.picture} alt={user?.name} />
-                    <AvatarFallback className="text-xs bg-orange-light text-orange font-semibold">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm font-medium text-navy hidden lg:block max-w-[120px] truncate">
-                    {user?.name}
-                  </span>
-                  <ChevronDown
-                    className={`h-4 w-4 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
+                  <Bell className="h-5 w-5" />
+                  {unreadCount > 0 && (
+                    <span className="absolute top-1 right-1.5 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white" />
+                  )}
+                </Link>
 
-                {dropdownOpen && (
-                  <div
-                    className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-slate-100 py-2"
-                    style={{ boxShadow: "0 8px 32px rgba(27, 61, 111, 0.12)" }}
+                {/* Profile Dropdown */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-slate-50 transition-colors"
                   >
-                    <div className="px-4 py-3 border-b border-slate-100">
-                      <p className="text-sm font-semibold text-navy truncate">
-                        {user?.name}
-                      </p>
-                      <p className="text-xs text-slate-400 truncate">
-                        {user?.email}
-                      </p>
-                    </div>
-                    <div className="py-1">
-                      {dropdownLinks.map(({ to, icon: Icon, label }) => (
-                        <Link
-                          key={label}
-                          to={to}
-                          onClick={() => setDropdownOpen(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-navy transition-colors"
+                    <Avatar className="h-9 w-9 border-2 border-slate-100">
+                      <AvatarImage src={user?.picture} alt={user?.name} />
+                      <AvatarFallback className="text-xs bg-orange-light text-orange font-semibold">
+                        {initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium text-navy hidden lg:block max-w-[120px] truncate">
+                      {user?.name}
+                    </span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  {dropdownOpen && (
+                    <div
+                      className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-slate-100 py-2"
+                      style={{
+                        boxShadow: "0 8px 32px rgba(27, 61, 111, 0.12)",
+                      }}
+                    >
+                      <div className="px-4 py-3 border-b border-slate-100">
+                        <p className="text-sm font-semibold text-navy truncate">
+                          {user?.name}
+                        </p>
+                        <p className="text-xs text-slate-400 truncate">
+                          {user?.email}
+                        </p>
+                      </div>
+                      <div className="py-1">
+                        {dropdownLinks.map(({ to, icon: Icon, label }) => (
+                          <Link
+                            key={label}
+                            to={to}
+                            onClick={() => setDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-navy transition-colors"
+                          >
+                            <Icon className="h-4 w-4 text-slate-400" />
+                            {label}
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="border-t border-slate-100 pt-1">
+                        <button
+                          onClick={handleLogout}
+                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-danger hover:bg-danger/5 transition-colors"
                         >
-                          <Icon className="h-4 w-4 text-slate-400" />
-                          {label}
-                        </Link>
-                      ))}
+                          <LogOut className="h-4 w-4" />
+                          {t("common.logOut")}
+                        </button>
+                      </div>
                     </div>
-                    <div className="border-t border-slate-100 pt-1">
-                      <button
-                        onClick={handleLogout}
-                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-danger hover:bg-danger/5 transition-colors"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        {t("common.logOut")}
-                      </button>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ) : (
               <>

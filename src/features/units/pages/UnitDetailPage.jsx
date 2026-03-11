@@ -12,18 +12,30 @@ import {
   Sofa,
   Navigation,
   Home,
+  Heart,
 } from "lucide-react";
 import { useUnitDetail } from "@/features/units/hooks/useUnitDetail";
 import UnitGallery from "@/features/units/components/UnitGallery";
 import { Button } from "@/shared/components/ui/button";
 import { useAuthStore } from "@/shared/stores/auth.store";
+import { useCheckIsFavorited } from "@/features/favorites/hooks/useFavorites";
+import { useFavoriteActions } from "@/features/favorites/hooks/useFavoriteActions";
+import ReviewList from "@/features/reviews/components/ReviewList";
 
 export default function UnitDetailPage() {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
   const { unit, isLoading, isError } = useUnitDetail(id);
+
+  const { isFavorited } = useCheckIsFavorited(unit?.id);
+  const { toggleFavorite, isPending: isFavoritePending } = useFavoriteActions();
+
+  const handleFavoriteClick = () => {
+    if (!isAuthenticated) return navigate("/login");
+    toggleFavorite({ unitId: unit.id, currentlyFavorited: isFavorited });
+  };
 
   if (isLoading)
     return (
@@ -135,9 +147,27 @@ export default function UnitDetailPage() {
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl font-bold text-navy mb-2">
-                {unit.title}
-              </h1>
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <h1 className="text-2xl font-bold text-navy">{unit.title}</h1>
+                {user && (
+                  <button
+                    onClick={handleFavoriteClick}
+                    disabled={isFavoritePending}
+                    className="p-2.5 rounded-full bg-white border border-slate-200 shadow-sm hover:border-red-200 hover:bg-red-50 transition-colors shrink-0"
+                    aria-label={
+                      isFavorited ? "Remove favorite" : "Add favorite"
+                    }
+                  >
+                    <Heart
+                      className={`h-5 w-5 transition-colors ${
+                        isFavorited
+                          ? "fill-red-500 text-red-500"
+                          : "text-slate-400"
+                      }`}
+                    />
+                  </button>
+                )}
+              </div>
               <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                 <span className="flex items-center gap-1.5">
                   <MapPin className="h-4 w-4 text-orange" />
@@ -274,6 +304,9 @@ export default function UnitDetailPage() {
                 </div>
               </div>
             )}
+
+            {/* Reviews Section */}
+            <ReviewList unitId={unit.id} />
           </div>
 
           {/* Right: booking sidebar */}

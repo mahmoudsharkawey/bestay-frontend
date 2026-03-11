@@ -21,6 +21,13 @@ import UnitDetailPage from "@/features/units/pages/UnitDetailPage";
 import MyUnitsPage from "@/features/units/pages/MyUnitsPage";
 import CreateEditUnitPage from "@/features/units/pages/CreateEditUnitPage";
 import BookingsPage from "@/features/bookings/pages/BookingsPage";
+import PaymentPage from "@/features/payments/pages/PaymentPage";
+import PaymentSuccessPage from "@/features/payments/pages/PaymentSuccessPage";
+import PaymentHistoryPage from "@/features/payments/pages/PaymentHistoryPage";
+import MyVisitsPage from "@/features/visits/pages/MyVisitsPage";
+import ScheduleVisitPage from "@/features/visits/pages/ScheduleVisitPage";
+import MyFavoritesPage from "@/features/favorites/pages/MyFavoritesPage";
+import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 import ProfilePage from "@/features/profile/pages/ProfilePage";
 import AdminDashboardPage from "@/features/admin/pages/AdminDashboardPage";
 import LandlordDashboard from "@/features/landlord/pages/LandlordDashboard";
@@ -45,7 +52,14 @@ export const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
           { path: "/bookings", element: <BookingsPage /> },
+          { path: "/payments", element: <PaymentPage /> },
+          { path: "/payments/history", element: <PaymentHistoryPage /> },
+          { path: "/payments/success", element: <PaymentSuccessPage /> },
+          { path: "/visits", element: <MyVisitsPage /> },
+          { path: "/visits/schedule/:unitId", element: <ScheduleVisitPage /> },
           { path: "/profile", element: <ProfilePage /> },
+          { path: "/favorites", element: <MyFavoritesPage /> },
+          { path: "/notifications", element: <NotificationsPage /> },
           { path: "/units/my", element: <MyUnitsPage /> },
           { path: "/units/new", element: <CreateEditUnitPage /> },
           { path: "/units/:id/edit", element: <CreateEditUnitPage /> },

@@ -18,7 +18,7 @@ const STEPS = [
 
 function CreateEditForm({ mode, unit }) {
   const { t } = useTranslation();
-  const { form, step, totalSteps, nextSt0ep, prevStep, submitForm, isPending } =
+  const { form, step, totalSteps, nextStep, prevStep, submitForm, isPending } =
     useCreateEditUnit({ mode, unit });
 
   return (

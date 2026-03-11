@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { MapPin, GraduationCap, BedDouble, Users } from "lucide-react";
+import { MapPin, GraduationCap, Heart } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Badge } from "@/shared/components/ui/badge";
+import { useCheckIsFavorited } from "@/features/favorites/hooks/useFavorites";
+import { useFavoriteActions } from "@/features/favorites/hooks/useFavoriteActions";
+import { useAuthStore } from "@/shared/stores/auth.store";
 
 const GENDER_COLORS = {
   MALE_ONLY: "bg-blue-100 text-blue-700",
@@ -16,6 +18,20 @@ const ROOM_COLORS = {
 
 export default function UnitCard({ unit }) {
   const { t } = useTranslation();
+  const { user } = useAuthStore();
+  const { isFavorited } = useCheckIsFavorited(unit.id);
+  const { toggleFavorite, isPending } = useFavoriteActions();
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault(); // Prevent navigating to UnitDetailPage
+    e.stopPropagation();
+    if (!user) {
+      // Could show a login modal/toast here
+      return;
+    }
+    toggleFavorite({ unitId: unit.id, currentlyFavorited: isFavorited });
+  };
+
   const image =
     unit?.images?.[0] ||
     "https://placehold.co/400x260/1B3D6F/white?text=BeStay";
@@ -23,7 +39,7 @@ export default function UnitCard({ unit }) {
   return (
     <Link
       to={`/units/${unit.id}`}
-      className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100"
+      className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 relative"
     >
       {/* Image */}
       <div className="relative h-52 overflow-hidden">
@@ -44,6 +60,28 @@ export default function UnitCard({ unit }) {
             {unit.genderType}
           </span>
         </div>
+
+        {/* Favorite Heart Button */}
+        {user && (
+          <button
+            onClick={handleFavoriteClick}
+            disabled={isPending}
+            className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all z-10 ${
+              isFavorited
+                ? "bg-white/90 shadow-sm"
+                : "bg-black/20 hover:bg-white/90 hover:shadow-sm text-white hover:text-red-500"
+            }`}
+            aria-label={
+              isFavorited ? "Remove from favorites" : "Add to favorites"
+            }
+          >
+            <Heart
+              className={`h-5 w-5 transition-colors ${
+                isFavorited ? "fill-red-500 text-red-500" : ""
+              }`}
+            />
+          </button>
+        )}
       </div>
 
       {/* Content */}
