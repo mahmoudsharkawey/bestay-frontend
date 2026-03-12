@@ -21,13 +21,14 @@ import { useAuthStore } from "@/shared/stores/auth.store";
 import { useCheckIsFavorited } from "@/features/favorites/hooks/useFavorites";
 import { useFavoriteActions } from "@/features/favorites/hooks/useFavoriteActions";
 import ReviewList from "@/features/reviews/components/ReviewList";
+import LeafletMap from "@/shared/components/LeafletMap";
 
 export default function UnitDetailPage() {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuthStore();
-  const { unit, isLoading, isError } = useUnitDetail(id);
+  const { unit, isLoading, isError, error } = useUnitDetail(id);
 
   const { isFavorited } = useCheckIsFavorited(unit?.id);
   const { toggleFavorite, isPending: isFavoritePending } = useFavoriteActions();
@@ -225,6 +226,27 @@ export default function UnitDetailPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Location */}
+            {(unit.latitude || unit.longitude) && (
+              <div>
+                <h2 className="text-lg font-semibold text-navy mb-3">
+                  {t("units.location")}
+                </h2>
+                <LeafletMap
+                  mode="display"
+                  initialPosition={{
+                    lat: parseFloat(unit.latitude),
+                    lng: parseFloat(unit.longitude),
+                  }}
+                  className="h-[350px] w-full rounded-2xl overflow-hidden border border-slate-100 shadow-sm"
+                />
+                <p className="mt-2 text-sm text-slate-500 flex items-center gap-1.5">
+                  <Navigation className="h-3.5 w-3.5 text-orange" />
+                  {unit.address}
+                </p>
               </div>
             )}
 

@@ -235,6 +235,7 @@
     "updateSuccess": "Property updated successfully!",
     "activeUnits": "Active Properties",
     "deletedUnits": "Deleted Properties",
+    "location": "Unit Location",
     "rating": "rating",
     "roomTypes": {
       "SINGLE": "Single Room",
@@ -281,7 +282,10 @@
       "longitude": "Longitude",
       "furnished": "Furnished?",
       "yes": "Yes — Furnished",
-      "no": "No — Unfurnished"
+      "no": "No — Unfurnished",
+      "searchAddress": "Search for an address...",
+      "selectOnMap": "Select on Map",
+      "mapHint": "Click on the map or drag the marker to set the exact location."
     },
     "furnished": "Furnished",
     "rooms": "rooms",

@@ -2,6 +2,68 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-geosearch/dist/geosearch.css";
+
+/* Leaflet Map Premium Styling */
+.leaflet-container {
+  font-family: inherit;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-control-geosearch .results > * {
+  padding: 10px 15px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+}
+
+.leaflet-control-geosearch .results > *:hover {
+  background-color: #f8fafc;
+}
+
+.leaflet-control-geosearch form input {
+  font-family: inherit;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.leaflet-bar {
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.leaflet-bar a {
+  border-radius: 8px !important;
+  margin-bottom: 4px;
+}
+
+/* Locate Me Button Styling */
+.locate-me-btn {
+  background: white;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.locate-me-btn:hover {
+  color: #1e293b;
+  background-color: #f8fafc;
+}
+
+.locate-me-btn svg {
+  width: 18px;
+  height: 18px;
+}
 
 @theme inline {
   --color-navy: #1b3d6f;
