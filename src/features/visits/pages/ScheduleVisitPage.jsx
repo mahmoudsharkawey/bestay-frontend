@@ -20,10 +20,15 @@ export default function ScheduleVisitPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { unit, isLoading: unitLoading } = useUnitDetail(unitId);
-  const { proposedDate, setProposedDate, handleSubmit, isSubmitting } =
-    useScheduleVisit(unitId);
+  const {
+    proposedDate,
+    setProposedDate,
+    proposedTime,
+    setProposedTime,
+    handleSubmit,
+    isSubmitting,
+  } = useScheduleVisit(unitId);
 
-  console.log(proposedDate);
   // Minimum date = tomorrow
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -149,9 +154,23 @@ export default function ScheduleVisitPage() {
                   min={minDate}
                   value={proposedDate}
                   onChange={(e) => setProposedDate(e.target.value)}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-base text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition bg-white mb-6"
+                  required
+                />
+
+                <h2 className="text-base font-semibold text-navy mb-4 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-orange" />
+                  {t("visits.chooseTimeLabel")}
+                </h2>
+                <input
+                  id="visit-time-input"
+                  type="time"
+                  value={proposedTime}
+                  onChange={(e) => setProposedTime(e.target.value)}
                   className="w-full border border-slate-200 rounded-xl px-4 py-3 text-base text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange/40 focus:border-orange transition bg-white"
                   required
                 />
+
                 <p className="text-xs text-slate-400 mt-3 flex items-start gap-1.5">
                   <Info className="h-3.5 w-3.5 shrink-0 mt-0.5 text-slate-300" />
                   {t("visits.landlordReviewNote")}
@@ -196,8 +215,18 @@ export default function ScheduleVisitPage() {
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Clock className="h-4 w-4 text-slate-300 shrink-0 mt-0.5" />
-                  <span>{t("visits.responseTime")}</span>
+                  <Clock className="h-4 w-4 text-orange shrink-0 mt-0.5" />
+                  <span>
+                    {proposedTime ? (
+                      <span className="text-slate-800 font-medium">
+                        {proposedTime}
+                      </span>
+                    ) : (
+                      <span className="italic text-slate-400">
+                        {t("visits.noTimeSelected")}
+                      </span>
+                    )}
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Info className="h-4 w-4 text-slate-300 shrink-0 mt-0.5" />
@@ -208,7 +237,7 @@ export default function ScheduleVisitPage() {
               <Button
                 type="submit"
                 form="schedule-form"
-                disabled={isSubmitting || !proposedDate}
+                disabled={isSubmitting || !proposedDate || !proposedTime}
                 className="w-full h-12 bg-orange hover:bg-orange-hover text-white font-semibold rounded-xl text-base disabled:opacity-60"
               >
                 <Calendar className="h-4 w-4 mr-2" />

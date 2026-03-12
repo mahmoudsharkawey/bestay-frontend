@@ -14,12 +14,13 @@ export function useScheduleVisit(unitId) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [proposedDate, setProposedDate] = useState("");
+  const [proposedTime, setProposedTime] = useState("");
 
   const { mutate: submitVisit, isPending: isSubmitting } = useMutation({
     mutationFn: () =>
       visitsService.scheduleVisit(unitId, {
-        // HTML input returns "YYYY-MM-DD" — backend requires full ISO 8601
-        proposedDate: new Date(proposedDate + "T00:00:00").toISOString(),
+        // combine date "YYYY-MM-DD" and time "HH:mm"
+        proposedDate: new Date(`${proposedDate}T${proposedTime}:00`).toISOString(),
       }),
     onSuccess: () => {
       toast.success(t("visits.scheduleSuccess"));
@@ -38,13 +39,24 @@ export function useScheduleVisit(unitId) {
       toast.error(t("visits.dateRequired"));
       return;
     }
+    if (!proposedTime) {
+      toast.error(t("visits.timeRequired"));
+      return;
+    }
     // Must be a future date
-    if (new Date(proposedDate) <= new Date()) {
+    if (new Date(`${proposedDate}T${proposedTime}:00`) <= new Date()) {
       toast.error(t("visits.dateMustBeFuture"));
       return;
     }
     submitVisit();
   };
 
-  return { proposedDate, setProposedDate, handleSubmit, isSubmitting };
+  return {
+    proposedDate,
+    setProposedDate,
+    proposedTime,
+    setProposedTime,
+    handleSubmit,
+    isSubmitting,
+  };
 }
