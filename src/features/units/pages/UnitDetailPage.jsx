@@ -35,6 +35,7 @@ export default function UnitDetailPage() {
 
   const handleFavoriteClick = () => {
     if (!isAuthenticated) return navigate("/login");
+    if (user.role === "LANDLORD") return;
     toggleFavorite({ unitId: unit.id, currentlyFavorited: isFavorited });
   };
 
@@ -352,6 +353,7 @@ export default function UnitDetailPage() {
                 </div>
               )}
               <Button
+              disabled={unit.isVisited || user.role === "LANDLORD" || user.role === "ADMIN"}
                 onClick={handleScheduleVisit}
                 className="w-full h-12 bg-orange hover:bg-orange-hover text-white font-semibold rounded-xl text-base"
               >

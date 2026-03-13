@@ -371,7 +371,9 @@
       "rejectedByUser": "Rejected by User",
       "cancelledByOwner": "Cancelled by Owner",
       "cancelledByUser": "Cancelled by User",
-      "refunded": "Refunded"
+      "refunded": "Refunded",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
     },
     "tabs": {
       "all": "All",

@@ -27,7 +27,6 @@ export function useMyFavorites() {
  */
 export function useCheckIsFavorited(unitId) {
   const { user } = useAuthStore();
-
   const { data, isLoading } = useQuery({
     queryKey: ["favorite-status", unitId, user?.id],
     queryFn: () => favoritesService.checkIsFavorited(unitId, user.id),

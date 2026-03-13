@@ -38,21 +38,41 @@ function StatCard({ icon: Icon, label, value, color, to }) {
   return to ? <Link to={to}>{inner}</Link> : inner;
 }
 
-/* ── Status badge ───────────────────────────────────── */
 const STATUS_STYLES = {
-  PENDING: "bg-yellow-100 text-yellow-700",
+  PENDING_OWNER: "bg-yellow-100 text-yellow-700",
   APPROVED: "bg-green-100 text-green-700",
-  REJECTED: "bg-red-100 text-red-700",
+  REJECTED_BY_OWNER: "bg-red-100 text-red-700",
   CONFIRMED: "bg-blue-100 text-blue-700",
   CANCELLED: "bg-slate-100 text-slate-500",
   COMPLETED: "bg-emerald-100 text-emerald-700",
+  BOOKED: "bg-green-100 text-green-700",
 };
-function StatusBadge({ status }) {
+
+function StatusBadge({ status, type = "visit" }) {
+  const { t } = useTranslation();
+  
+  // Map API status (UPPER_SNAKE) to translation key (camelCase)
+  const getTranslationKey = (s) => {
+    const map = {
+      PENDING_OWNER: "pendingOwner",
+      APPROVED: "approved",
+      REJECTED_BY_OWNER: "rejectedByOwner",
+      CONFIRMED: "confirmed",
+      CANCELLED: "cancelled",
+      COMPLETED: "completed",
+      BOOKED: "confirmed", // Bookings use 'confirmed' for 'BOOKED'
+    };
+    return map[s] || s.toLowerCase();
+  };
+
+  const translationKey = getTranslationKey(status);
+  const label = t(`${type === "visit" ? "visits" : "bookings"}.status.${translationKey}`);
+
   return (
     <span
       className={`text-xs font-semibold px-2.5 py-1 rounded-full ${STATUS_STYLES[status] || "bg-slate-100 text-slate-500"}`}
     >
-      {status}
+      {label || status}
     </span>
   );
 }
@@ -251,12 +271,12 @@ export default function LandlordDashboard() {
                       </p>
                       <p className="text-xs text-slate-400 flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {visit.scheduledAt
-                          ? new Date(visit.scheduledAt).toLocaleDateString()
-                          : visit.date || "—"}
+                        {visit.proposedDate
+                          ? new Date(visit.proposedDate).toLocaleDateString()
+                          : "—"}
                       </p>
                     </div>
-                    <StatusBadge status={visit.status} />
+                    <StatusBadge status={visit.status} type="visit" />
                   </div>
                 ))}
               </div>
@@ -300,9 +320,13 @@ export default function LandlordDashboard() {
                       </p>
                       <p className="text-xs text-slate-400 truncate max-w-[160px]">
                         {booking.unit?.title || booking.unitId}
+                        <span className="mx-1">·</span>
+                        {booking.createdAt
+                          ? new Date(booking.createdAt).toLocaleDateString()
+                          : "—"}
                       </p>
                     </div>
-                    <StatusBadge status={booking.status} />
+                    <StatusBadge status={booking.status} type="booking" />
                   </div>
                 ))}
               </div>

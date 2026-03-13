@@ -371,7 +371,9 @@
       "rejectedByUser": "مرفوض منك",
       "cancelledByOwner": "ملغى من المالك",
       "cancelledByUser": "ملغى منك",
-      "refunded": "تم الاسترداد"
+      "refunded": "تم الاسترداد",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
     },
     "tabs": {
       "all": "الكل",
