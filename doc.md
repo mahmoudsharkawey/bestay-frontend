@@ -769,3 +769,16 @@ Status	Meaning
 422	Unprocessable Entity — validation failed
 429	Too Many Requests — rate limit hit
 500	Internal Server Error
+
+
+
+
+
+
+
+
+
+
+
+
+

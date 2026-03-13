@@ -29,9 +29,17 @@ import ScheduleVisitPage from "@/features/visits/pages/ScheduleVisitPage";
 import MyFavoritesPage from "@/features/favorites/pages/MyFavoritesPage";
 import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 import ProfilePage from "@/features/profile/pages/ProfilePage";
-import AdminDashboardPage from "@/features/admin/pages/AdminDashboardPage";
 import LandlordDashboard from "@/features/landlord/pages/LandlordDashboard";
 import NotFoundPage from "@/shared/components/layout/NotFoundPage";
+
+// Admin pages
+import AdminDashboardPage from "@/features/admin/pages/AdminDashboardPage";
+import AdminUsersPage from "@/features/admin/pages/AdminUsersPage";
+import AdminListingsPage from "@/features/admin/pages/AdminListingsPage";
+import AdminBookingsPage from "@/features/admin/pages/AdminBookingsPage";
+import AdminVisitsPage from "@/features/admin/pages/AdminVisitsPage";
+import AdminReviewsPage from "@/features/admin/pages/AdminReviewsPage";
+import AdminAnalyticsPage from "@/features/admin/pages/AdminAnalyticsPage";
 
 export const router = createBrowserRouter([
   // Public routes (MainLayout)
@@ -92,7 +100,15 @@ export const router = createBrowserRouter([
       {
         path: "/admin",
         element: <AdminLayout />,
-        children: [{ index: true, element: <AdminDashboardPage /> }],
+        children: [
+          { index: true, element: <AdminDashboardPage /> },
+          { path: "users", element: <AdminUsersPage /> },
+          { path: "listings", element: <AdminListingsPage /> },
+          { path: "bookings", element: <AdminBookingsPage /> },
+          { path: "visits", element: <AdminVisitsPage /> },
+          { path: "reviews", element: <AdminReviewsPage /> },
+          { path: "analytics", element: <AdminAnalyticsPage /> },
+        ],
       },
     ],
   },
