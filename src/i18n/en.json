@@ -163,8 +163,57 @@
     "sitemap": "Sitemap"
   },
   "home": {
-    "title": "Home Page",
-    "comingSoon": "Home Page — Coming Soon"
+    "hero": {
+      "title": "Find Your Perfect Home Away From Home",
+      "subtitle": "Safe, affordable, and vetted housing for students and expats worldwide. Near universities, fully furnished, and ready for you.",
+      "findHousing": "Find Housing",
+      "listProperty": "List Your Property"
+    },
+    "search": {
+      "title": "Quick Search",
+      "placeholder": "Enter university or city...",
+      "priceRange": "Price Range",
+      "rating": "Rating",
+      "searchBtn": "Search Now"
+    },
+    "featured": {
+      "title": "Featured Properties",
+      "subtitle": "Hand-picked high-quality listings near top universities."
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "student": {
+        "title": "For Students",
+        "step1": "Search: Find verified properties near your university.",
+        "step2": "Visit: Book a physical or virtual visit.",
+        "step3": "Stay: Confirm booking and move in safely."
+      },
+      "landlord": {
+        "title": "For Landlords",
+        "step1": "List: Add your property with details and photos.",
+        "step2": "Approve: Review and approve visit requests.",
+        "step3": "Earn: Get verified tenants and secure payments."
+      }
+    },
+    "benefits": {
+      "title": "Why Choose BeStay?",
+      "map": {
+        "title": "Map-Based Search",
+        "desc": "Find exactly where you want to live with our interactive map."
+      },
+      "verified": {
+        "title": "Verified Listings",
+        "desc": "Every property is vetted by our team for safety and quality."
+      },
+      "booking": {
+        "title": "Easy Booking",
+        "desc": "Seamless process from search to keys in hand."
+      }
+    },
+    "testimonials": {
+      "title": "What Our Community Says",
+      "subtitle": "Join thousands of happy students and landlords."
+    }
   },
   "validation": {
     "nameMin": "Name must be at least 2 characters",
