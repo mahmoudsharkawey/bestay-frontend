@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -15,17 +15,16 @@ export default function PaymentPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const visitId = location.state?.visitId || searchParams.get("visitId");
   const clientSecret = location.state?.clientSecret;
 
   const { data: visitData, isLoading: isLoadingVisit } = useVisitDetails(visitId);
 
-  console.log("Visit Data:", visitData);
   const visit = visitData?.data;
 
   const amount = visit?.payment?.amount;
   const convertedAmount = amount ? Number(amount / 100) : 0;
-  console.log("Stripe Amount Setup:", amount, convertedAmount);
 
   if (!visitId || !clientSecret) {
     return (

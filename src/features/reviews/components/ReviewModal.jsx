@@ -1,8 +1,15 @@
-import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Star, X } from "lucide-react";
+import { Star } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/shared/components/ui/dialog";
+import { Textarea } from "@/shared/components/ui/textarea";
 import { useReviewActions } from "@/features/reviews/hooks/useReviewActions";
+import { useReviewModal } from "@/features/reviews/hooks/useReviewModal";
 
 export default function ReviewModal({
   isOpen,
@@ -13,24 +20,14 @@ export default function ReviewModal({
   const { t } = useTranslation();
   const { createReview, updateReview, isCreating, isUpdating } =
     useReviewActions(unitId);
-
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState("");
-  const [hoveredRating, setHoveredRating] = useState(0);
-
-  useEffect(() => {
-    if (isOpen) {
-      if (existingReview) {
-        setRating(existingReview.rating);
-        setComment(existingReview.comment || "");
-      } else {
-        setRating(5);
-        setComment("");
-      }
-    }
-  }, [isOpen, existingReview]);
-
-  if (!isOpen) return null;
+  const {
+    rating,
+    setRating,
+    comment,
+    setComment,
+    hoveredRating,
+    setHoveredRating,
+  } = useReviewModal({ isOpen, existingReview });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,34 +44,18 @@ export default function ReviewModal({
   const isPending = isCreating || isUpdating;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-navy/40 backdrop-blur-sm"
-        onClick={onClose}
-      />
-
-      {/* Modal */}
-      <div
-        className="relative w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-        role="dialog"
-      >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h2 className="text-lg font-bold text-navy">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-navy">
             {existingReview
               ? t("reviews.editReview")
               : t("reviews.writeReview")}
-          </h2>
-          <button
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-navy hover:bg-slate-50 rounded-full transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
+          </DialogTitle>
+        </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="p-6">
-          <div className="mb-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
             <label className="block text-sm font-medium text-slate-700 mb-3 text-center">
               {t("reviews.tapToRate")}
             </label>
@@ -103,7 +84,7 @@ export default function ReviewModal({
             </p>
           </div>
 
-          <div className="mb-6">
+          <div>
             <label
               htmlFor="comment"
               className="block text-sm font-medium text-slate-700 mb-2"
@@ -113,12 +94,12 @@ export default function ReviewModal({
                 ({t("common.optional")})
               </span>
             </label>
-            <textarea
+            <Textarea
               id="comment"
               rows={4}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full rounded-xl border-slate-200 bg-slate-50 placeholder:text-slate-400 focus:border-navy focus:ring-navy text-sm p-3 resize-none"
+              className="rounded-xl border-slate-200 bg-slate-50 placeholder:text-slate-400 focus:border-navy focus:ring-navy text-sm resize-none"
               placeholder={t("reviews.placeholder")}
             />
           </div>
@@ -145,7 +126,7 @@ export default function ReviewModal({
             </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

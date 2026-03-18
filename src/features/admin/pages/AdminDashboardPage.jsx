@@ -25,25 +25,9 @@ import {
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import StatCard from "@/features/admin/components/StatCard";
 import ChartCard from "@/features/admin/components/ChartCard";
+import EmptyChartState from "@/features/admin/components/EmptyChartState";
 import { useAdminDashboard } from "@/features/admin/hooks/useAdminDashboard";
-
-const CHART_COLORS = [
-  "hsl(32, 91%, 52%)", // orange (primary)
-  "hsl(214, 60%, 27%)", // navy (secondary)
-  "hsl(142, 71%, 45%)", // green
-  "hsl(262, 80%, 60%)", // purple
-  "hsl(199, 89%, 48%)", // sky blue
-  "hsl(345, 82%, 60%)", // rose
-];
-
-const PIE_COLORS = [
-  "#f5a014",
-  "#1b3d6f",
-  "#16a34a",
-  "#8b5cf6",
-  "#0ea5e9",
-  "#e11d48",
-];
+import { CHART_COLORS, PIE_COLORS, buildChartArray } from "@/features/admin/constants";
 
 export default function AdminDashboardPage() {
   const { t } = useTranslation();
@@ -57,30 +41,10 @@ export default function AdminDashboardPage() {
     isChartsLoading,
   } = useAdminDashboard();
 
-  /* ── Helper to build chart-compatible array from API response ── */
-  const buildChartArray = (data) => {
-    if (Array.isArray(data)) return data;
-    if (data?.labels && data?.data) {
-      return data.labels.map((label, i) => ({
-        name: label,
-        value: data.data[i] || 0,
-      }));
-    }
-    return [];
-  };
-
   const revenueChartData = buildChartArray(revenueData);
   const bookingsChartData = buildChartArray(bookingsData);
   const usersGrowthChartData = buildChartArray(usersGrowthData);
   const visitsStatusChartData = buildChartArray(visitsStatusData);
-
-  const EmptyChartState = () => (
-    <div className="h-[280px] flex items-center justify-center border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-      <p className="text-sm text-slate-400 font-medium">
-        {t("common.noResults")}
-      </p>
-    </div>
-  );
 
   return (
     <div className="space-y-8">

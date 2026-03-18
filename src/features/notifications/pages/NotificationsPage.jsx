@@ -1,24 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { formatDistanceToNow } from "date-fns";
-import { enUS, ar } from "date-fns/locale";
-import {
-  Bell,
-  CheckCircle2,
-  Trash2,
-  CalendarCheck,
-  CalendarX,
-  CreditCard,
-  MessageSquare,
-} from "lucide-react";
-import { useUiStore } from "@/shared/stores/ui.store";
+import { Bell, CheckCircle2 } from "lucide-react";
 import { useNotifications } from "@/features/notifications/hooks/useNotifications";
 import { useNotificationActions } from "@/features/notifications/hooks/useNotificationActions";
 import { Button } from "@/shared/components/ui/button";
+import NotificationItem from "@/features/notifications/components/NotificationItem";
 
 export default function NotificationsPage() {
   const { t } = useTranslation();
-  const { language } = useUiStore();
-  const dateLocale = language === "ar" ? ar : enUS;
 
   const { notifications, isLoading, isError, unreadCount } = useNotifications();
   const { markAsRead, markAllAsRead, isMarkingAllRead, deleteNotification } =
@@ -47,64 +35,6 @@ export default function NotificationsPage() {
       </div>
     );
   }
-
-  const getIconForType = (type) => {
-    switch (type) {
-      case "VISIT_REQUEST":
-      case "VISIT_RESCHEDULED":
-      case "BOOKING_RESCHEDULED":
-        return <CalendarCheck className="h-5 w-5 text-orange" />;
-      case "VISIT_APPROVED":
-      case "VISIT_CONFIRMED":
-      case "BOOKING_CONFIRMED":
-        return <CheckCircle2 className="h-5 w-5 text-green-500" />;
-      case "VISIT_REJECTED":
-      case "VISIT_CANCELLED":
-      case "BOOKING_CANCELLED":
-      case "BOOKING_REJECTED":
-        return <CalendarX className="h-5 w-5 text-red-500" />;
-      case "PAYMENT_CONFIRMED":
-      case "PAYMENT_RECEIVED":
-        return <CreditCard className="h-5 w-5 text-blue-500" />;
-      case "PAYMENT_REFUNDED":
-        return <CreditCard className="h-5 w-5 text-orange" />;
-      case "NEW_REVIEW":
-        return <MessageSquare className="h-5 w-5 text-purple-500" />;
-      default:
-        return <Bell className="h-5 w-5 text-navy" />;
-    }
-  };
-
-  const getTitleForType = (type) => {
-    switch (type) {
-      case "VISIT_REQUEST":
-        return t("notifications.types.VISIT_REQUEST");
-      case "VISIT_APPROVED":
-        return t("notifications.types.VISIT_APPROVED");
-      case "VISIT_RESCHEDULED":
-        return t("notifications.types.VISIT_RESCHEDULED");
-      case "VISIT_REJECTED":
-        return t("notifications.types.VISIT_REJECTED");
-      case "PAYMENT_CONFIRMED":
-        return t("notifications.types.PAYMENT_CONFIRMED");
-      case "BOOKING_CONFIRMED":
-        return t("notifications.types.BOOKING_CONFIRMED");
-      case "BOOKING_CANCELLED":
-        return t("notifications.types.BOOKING_CANCELLED");
-      case "BOOKING_RESCHEDULED":
-        return t("notifications.types.BOOKING_RESCHEDULED");
-      case "BOOKING_REJECTED":
-        return t("notifications.types.BOOKING_REJECTED");
-      case "VISIT_CANCELLED":
-        return t("notifications.types.VISIT_CANCELLED");
-      case "PAYMENT_REFUNDED":
-        return t("notifications.types.PAYMENT_REFUNDED");
-      case "VISIT_CONFIRMED":
-        return t("notifications.types.VISIT_CONFIRMED");
-      default:
-        return type;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
@@ -149,58 +79,12 @@ export default function NotificationsPage() {
         ) : (
           <div className="space-y-4">
             {notifications.map((notification) => (
-              <div
+              <NotificationItem
                 key={notification._id || notification.id}
-                className={`flex gap-4 p-4 sm:p-5 rounded-2xl border transition-all ${
-                  notification.isRead
-                    ? "bg-white border-slate-100 opacity-75"
-                    : "bg-blue-50/50 border-blue-100 shadow-sm"
-                }`}
-                onClick={() => {
-                  if (!notification.isRead)
-                    markAsRead(notification._id || notification.id);
-                }}
-              >
-                <div className="shrink-0 mt-1">
-                  {getIconForType(notification.type)}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 mb-1">
-                    <h3
-                      className={`font-semibold text-sm sm:text-base ${notification.isRead ? "text-slate-700" : "text-navy"}`}
-                    >
-                      {getTitleForType(notification.type)}
-                    </h3>
-                    <span className="text-xs text-slate-400 whitespace-nowrap">
-                      {formatDistanceToNow(new Date(notification.createdAt), {
-                        addSuffix: true,
-                        locale: dateLocale,
-                      })}
-                    </span>
-                  </div>
-                  <p
-                    className={`text-sm ${notification.isRead ? "text-slate-500" : "text-slate-600"} mb-3`}
-                  >
-                    {notification.message}
-                  </p>
-
-                  {/* Action buttons mapping could go here if links were provided in DB */}
-                </div>
-
-                <div className="shrink-0 flex flex-col justify-start">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteNotification(notification._id || notification.id);
-                    }}
-                    className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                    aria-label="Delete notification"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+                notification={notification}
+                onMarkAsRead={markAsRead}
+                onDelete={deleteNotification}
+              />
             ))}
           </div>
         )}
