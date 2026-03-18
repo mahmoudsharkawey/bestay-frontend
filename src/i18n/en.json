@@ -107,7 +107,8 @@
     "resetCodeSent": "Reset code sent! Check your email.",
     "codeVerified": "Code verified!",
     "passwordResetSuccess": "Password reset successful! Please log in.",
-    "loginWithGoogle": "Login with Google"
+    "loginWithGoogle": "Login with Google",
+    "passwordMustContain": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)"
   },
   "profile": {
     "title": "Profile Settings",
