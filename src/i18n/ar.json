@@ -52,7 +52,8 @@
     "settings": "الإعدادات",
     "myDashboard": "لوحتي",
     "myUnits": "عقاراتي",
-    "myFavorites": "المفضلة"
+    "myFavorites": "المفضلة",
+    "myPreferences": "تفضيلاتي"
   },
   "auth": {
     "login": "تسجيل الدخول",
@@ -236,7 +237,13 @@
     "pricePositive": "يجب أن يكون السعر رقمًا موجبًا",
     "roomsRequired": "يجب إدخال عدد الغرف",
     "roomTypeRequired": "نوع الغرفة مطلوب",
-    "genderTypeRequired": "تفضيل الجنس مطلوب"
+    "genderTypeRequired": "تفضيل الجنس مطلوب",
+    "unitTypeRequired": "نوع الوحدة مطلوب",
+    "minBudgetPositive": "الحد الأدنى للميزانية يجب أن يكون ≥ 0",
+    "maxBudgetPositive": "الحد الأقصى للميزانية يجب أن يكون > 0",
+    "minLessMax": "الحد الأدنى يجب أن يكون ≤ الحد الأقصى",
+    "roomsPositive": "عدد الغرف يجب أن يكون > 0",
+    "preferenceCityRequired": "المدينة مطلوبة"
   },
   "units": {
     "browseTitle": "اعثر على منزلك المثالي",
@@ -289,6 +296,11 @@
     "deletedUnits": "العقارات المحذوفة",
     "location": "موقع الوحدة",
     "rating": "تقييم",
+    "unitTypes": {
+      "ROOM": "غرفة",
+      "APARTMENT": "شقة",
+      "STUDIO": "استوديو"
+    },
     "roomTypes": {
       "SINGLE": "غرفة مفردة",
       "DOUBLE": "غرفة مزدوجة",
@@ -599,5 +611,39 @@
     "navGroupMain": "الرئيسية",
     "navGroupManagement": "الإدارة",
     "navGroupInsights": "الرؤى والتحليلات"
+  },
+  "preferences": {
+    "title": "تفضيلاتي",
+    "subtitle": "حدد تفضيلات السكن الخاصة بك وسنجد لك أفضل الخيارات.",
+    "createTitle": "حدد تفضيلاتك",
+    "editTitle": "تعديل التفضيلات",
+    "yourPreferences": "تفضيلاتك",
+    "unitType": "نوع الوحدة",
+    "selectUnitType": "اختر نوع الوحدة",
+    "genderType": "تفضيل الجنس",
+    "selectGender": "اختر تفضيل الجنس",
+    "minBudget": "الحد الأدنى ($)",
+    "maxBudget": "الحد الأقصى ($)",
+    "city": "المدينة",
+    "cityPlaceholder": "مثال: القاهرة",
+    "university": "الجامعة",
+    "universityPlaceholder": "اختياري",
+    "rooms": "عدد الغرف",
+    "maxDistance": "أقصى مسافة (كم)",
+    "distancePlaceholder": "اختياري",
+    "furnished": "مفروشة",
+    "furnishedHint": "عرض الوحدات المفروشة فقط",
+    "facilities": "المرافق المفضلة",
+    "budget": "نطاق الميزانية",
+    "save": "حفظ التفضيلات",
+    "update": "تحديث التفضيلات",
+    "saveSuccess": "تم حفظ التفضيلات بنجاح!",
+    "updateSuccess": "تم تحديث التفضيلات بنجاح!",
+    "deleteSuccess": "تم حذف التفضيلات",
+    "matchingUnits": "الوحدات المقترحة",
+    "noMatches": "لا توجد وحدات مطابقة",
+    "noMatchesHint": "جرب تعديل تفضيلاتك للعثور على خيارات أكثر.",
+    "yes": "نعم",
+    "no": "لا"
   }
 }

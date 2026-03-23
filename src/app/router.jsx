@@ -29,6 +29,7 @@ import ScheduleVisitPage from "@/features/visits/pages/ScheduleVisitPage";
 import MyFavoritesPage from "@/features/favorites/pages/MyFavoritesPage";
 import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 import ProfilePage from "@/features/profile/pages/ProfilePage";
+import UserPreferencePage from "@/features/user-preference/pages/UserPreferencePage";
 import LandlordDashboard from "@/features/landlord/pages/LandlordDashboard";
 import NotFoundPage from "@/shared/components/layout/NotFoundPage";
 
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
           { path: "/profile", element: <ProfilePage /> },
           { path: "/favorites", element: <MyFavoritesPage /> },
           { path: "/notifications", element: <NotificationsPage /> },
+          { path: "/preferences", element: <UserPreferencePage /> },
           { path: "/units/my", element: <MyUnitsPage /> },
           { path: "/units/new", element: <CreateEditUnitPage /> },
           { path: "/units/:id/edit", element: <CreateEditUnitPage /> },

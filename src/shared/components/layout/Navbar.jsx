@@ -19,6 +19,7 @@ import {
   CreditCard,
   LogOut,
   Settings,
+  SlidersHorizontal,
   Building2,
   Plus,
   Bell,
@@ -72,7 +73,10 @@ export default function Navbar() {
   const dropdownLinks = [
     { to: "/profile", icon: User, label: t("nav.myProfile") },
     ...(isUser
-      ? [{ to: "/favorites", icon: Heart, label: t("nav.myFavorites") }]
+      ? [
+          { to: "/favorites", icon: Heart, label: t("nav.myFavorites") },
+          { to: "/preferences", icon: SlidersHorizontal, label: t("nav.myPreferences", "My Preferences") },
+        ]
       : []),
     { to: "/visits", icon: MapPin, label: t("nav.myVisits") },
     { to: "/bookings", icon: CalendarDays, label: t("nav.myBookings") },

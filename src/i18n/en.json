@@ -50,7 +50,8 @@
     "settings": "Settings",
     "myDashboard": "My Dashboard",
     "myUnits": "My Units",
-    "myFavorites": "My Favorites"
+    "myFavorites": "My Favorites",
+    "myPreferences": "My Preferences"
   },
   "auth": {
     "login": "Log In",
@@ -234,7 +235,13 @@
     "pricePositive": "Price must be a positive number",
     "roomsRequired": "Number of rooms is required",
     "roomTypeRequired": "Room type is required",
-    "genderTypeRequired": "Gender type is required"
+    "genderTypeRequired": "Gender type is required",
+    "unitTypeRequired": "Unit type is required",
+    "minBudgetPositive": "Min budget must be ≥ 0",
+    "maxBudgetPositive": "Max budget must be > 0",
+    "minLessMax": "Min budget must be ≤ max budget",
+    "roomsPositive": "Rooms must be > 0",
+    "preferenceCityRequired": "City is required"
   },
   "units": {
     "browseTitle": "Find Your Perfect Home",
@@ -287,6 +294,11 @@
     "deletedUnits": "Deleted Properties",
     "location": "Unit Location",
     "rating": "rating",
+    "unitTypes": {
+      "ROOM": "Room",
+      "APARTMENT": "Apartment",
+      "STUDIO": "Studio"
+    },
     "roomTypes": {
       "SINGLE": "Single Room",
       "DOUBLE": "Double Room",
@@ -597,5 +609,39 @@
     "navGroupMain": "Main",
     "navGroupManagement": "Management",
     "navGroupInsights": "Insights"
+  },
+  "preferences": {
+    "title": "My Preferences",
+    "subtitle": "Set your housing preferences and we'll find the best matches for you.",
+    "createTitle": "Set Your Preferences",
+    "editTitle": "Edit Preferences",
+    "yourPreferences": "Your Preferences",
+    "unitType": "Unit Type",
+    "selectUnitType": "Select unit type",
+    "genderType": "Gender Type",
+    "selectGender": "Select gender preference",
+    "minBudget": "Min Budget ($)",
+    "maxBudget": "Max Budget ($)",
+    "city": "City",
+    "cityPlaceholder": "e.g. Cairo",
+    "university": "University",
+    "universityPlaceholder": "Optional",
+    "rooms": "Number of Rooms",
+    "maxDistance": "Max Distance (km)",
+    "distancePlaceholder": "Optional",
+    "furnished": "Furnished",
+    "furnishedHint": "Only show furnished units",
+    "facilities": "Preferred Facilities",
+    "budget": "Budget Range",
+    "save": "Save Preferences",
+    "update": "Update Preferences",
+    "saveSuccess": "Preferences saved successfully!",
+    "updateSuccess": "Preferences updated successfully!",
+    "deleteSuccess": "Preferences deleted",
+    "matchingUnits": "Recommended Units",
+    "noMatches": "No matching units found",
+    "noMatchesHint": "Try adjusting your preferences to find more options.",
+    "yes": "Yes",
+    "no": "No"
   }
 }
