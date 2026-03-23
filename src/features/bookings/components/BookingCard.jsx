@@ -9,9 +9,7 @@ export default function BookingCard({ booking }) {
   const { t } = useTranslation();
 
   return (
-    <div
-      className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:shadow-md transition-shadow"
-    >
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:shadow-md transition-shadow">
       <Link to={`/units/${booking.unit?.id}`} className="shrink-0 group">
         {booking.unit?.images?.[0] ? (
           <img
@@ -42,16 +40,23 @@ export default function BookingCard({ booking }) {
             <MapPin className="h-4 w-4 text-slate-400" />
             {booking.unit?.city || "—"}
           </p>
-          <p className="flex items-center gap-1.5">
+      <div className="flex items-center gap-2">
+            <p className="flex items-center gap-1.5">
             <Calendar className="h-4 w-4 text-slate-400" />
             {booking.startDate
               ? format(new Date(booking.startDate), "MMM d, yyyy")
               : "—"}
           </p>
+          <p className="flex items-center gap-1.5 ">
+            <Calendar className="h-4 w-4 text-slate-400" />
+            {booking.endDate
+              ? format(new Date(booking.endDate), "MMM d, yyyy")
+              : "—"}
+          </p>
+      </div>
         </div>
 
-        {(booking.status === "CONFIRMED" ||
-          booking.status === "COMPLETED") && (
+        {(booking.status === "CONFIRMED" || booking.status === "COMPLETED") && (
           <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
             {booking.status === "CONFIRMED" && (
               <div className="text-sm font-medium text-emerald-600 flex items-center gap-1">

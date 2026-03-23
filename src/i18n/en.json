@@ -406,6 +406,8 @@
     "reject": "Reject",
     "proposeReschedule": "Propose Reschedule",
     "confirmVisit": "Confirm Visit",
+    "startDate": "Start Date",
+    "endDate": "End Date",
     "confirmRequiresPaid": "Payment must be completed before confirming",
     "awaitingPayment": "Awaiting tenant payment",
     "cancelVisit": "Cancel Visit",

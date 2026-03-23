@@ -47,6 +47,6 @@ export const visitsService = {
     apiClient.post(`/visits/${visitId}/cancel`).then((r) => r.data),
 
   /** LANDLORD — confirm visit was physically completed (requires PAID payment) */
-  confirmVisit: (visitId) =>
-    apiClient.post(`/visits/${visitId}/confirm`).then((r) => r.data),
+  confirmVisit: (visitId, data) =>
+    apiClient.post(`/visits/${visitId}/confirm`, data).then((r) => r.data),
 };

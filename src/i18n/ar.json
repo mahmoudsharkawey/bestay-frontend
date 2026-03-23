@@ -408,6 +408,8 @@
     "reject": "رفض",
     "proposeReschedule": "اقتراح موعد جديد",
     "confirmVisit": "تأكيد الزيارة",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
     "confirmRequiresPaid": "يجب إتمام الدفع قبل التأكيد",
     "awaitingPayment": "في انتظار دفع المستأجر",
     "cancelVisit": "إلغاء الزيارة",

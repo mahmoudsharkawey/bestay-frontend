@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -28,6 +29,9 @@ function formatDate(iso) {
 }
 
 export default function VisitCard({ visit, role, actions }) {
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const { t } = useTranslation();
   const {
     approve,
@@ -177,18 +181,78 @@ export default function VisitCard({ visit, role, actions }) {
           {/* LANDLORD actions on APPROVED */}
           {isLandlord && visit.status === "APPROVED" && (
             <>
-              <Button
-                size="sm"
-                onClick={() => confirm(visit.id)}
-                disabled={isConfirming || !isPaymentPaid}
-                title={
-                  !isPaymentPaid ? t("visits.confirmRequiresPaid") : undefined
-                }
-                className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg h-8 px-3 text-xs disabled:opacity-50"
-              >
-                <CalendarCheck className="h-3.5 w-3.5 mr-1" />
-                {t("visits.confirmVisit")}
-              </Button>
+              {!showDatePicker ? (
+                <Button
+                  size="sm"
+                  onClick={() => setShowDatePicker(true)}
+                  disabled={!isPaymentPaid}
+                  title={
+                    !isPaymentPaid ? t("visits.confirmRequiresPaid") : undefined
+                  }
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg h-8 px-3 text-xs disabled:opacity-50"
+                >
+                  <CalendarCheck className="h-3.5 w-3.5 mr-1" />
+                  {t("visits.confirmVisit")}
+                </Button>
+              ) : (
+                <div className="w-full flex flex-wrap items-end gap-2 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs text-emerald-700 font-medium">
+                      {t("visits.startDate")}
+                    </label>
+                    <input
+                      type="date"
+                      min={new Date().toISOString().split("T")[0]}
+                      value={startDate}
+                      onChange={(e) => {
+                        setStartDate(e.target.value);
+                        if (endDate && e.target.value > endDate) setEndDate("");
+                      }}
+                      className="border border-emerald-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-300 bg-white"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs text-emerald-700 font-medium">
+                      {t("visits.endDate")}
+                    </label>
+                    <input
+                      type="date"
+                      min={startDate || new Date().toISOString().split("T")[0]}
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      disabled={!startDate}
+                      className="border border-emerald-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-300 bg-white disabled:opacity-50"
+                    />
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() =>
+                      confirm({
+                        visitId: visit.id,
+                        data: {
+                          startDate: new Date(startDate).toISOString(),
+                          endDate: new Date(endDate).toISOString(),
+                        },
+                      })
+                    }
+                    disabled={isConfirming || !startDate || !endDate}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg h-7 px-3 text-xs"
+                  >
+                    {isConfirming ? t("common.saving") : t("visits.confirmVisit")}
+                  </Button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowDatePicker(false);
+                      setStartDate("");
+                      setEndDate("");
+                    }}
+                    className="text-xs text-slate-400 hover:text-slate-600"
+                  >
+                    {t("common.cancel")}
+                  </button>
+                </div>
+              )}
               {!isPaymentPaid && (
                 <span className="flex items-center gap-1 text-xs text-amber-600">
                   <AlertCircle className="h-3.5 w-3.5" />

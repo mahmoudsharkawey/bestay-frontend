@@ -70,7 +70,7 @@ export function useVisitActions() {
   };
 
   const { mutate: confirm, isPending: isConfirming } = useMutation({
-    mutationFn: (visitId) => visitsService.confirmVisit(visitId),
+    mutationFn: ({ visitId, data }) => visitsService.confirmVisit(visitId, data),
     onSuccess: () => {
       toast.success(t("visits.confirmSuccess"));
       invalidate();
