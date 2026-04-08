@@ -644,6 +644,93 @@
     "noMatches": "No matching units found",
     "noMatchesHint": "Try adjusting your preferences to find more options.",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "viewRecommendations": "View AI Recommendations"
+  },
+  "recommendations": {
+    "title": "For You",
+    "subtitle": "AI-powered unit recommendations tailored to your preferences.",
+    "excellentMatch": "Match",
+    "goodMatch": "Match",
+    "fairMatch": "Match",
+    "weakMatch": "Match",
+    "scoreDetails": "Score Details",
+    "whyMatch": "Why this matches you",
+    "noPreferences": "Set Your Preferences First",
+    "noPreferencesHint": "We need your housing preferences to generate smart recommendations. It only takes a minute!",
+    "setPreferences": "Set My Preferences",
+    "noResults": "No Matches Found",
+    "noResultsHint": "Try adjusting your preferences to discover more options that suit you.",
+    "adjustPreferences": "Adjust Preferences",
+    "tryAgain": "Try Again",
+    "unitsFound": "recommendations found",
+    "score": {
+      "price": "Price",
+      "location": "Location",
+      "facilities": "Facilities",
+      "reviews": "Reviews",
+      "popularity": "Popularity"
+    }
+  },
+  "pricing": {
+    "title": "Pricing Insights",
+    "subtitle": "AI-powered market analysis to help you price your units competitively.",
+    "tabs": {
+      "explore": "Explore Pricing",
+      "myUnits": "My Units"
+    },
+    "exploreTitle": "Hypothetical Pricing Analysis",
+    "getInsight": "Get Insight",
+    "noUnits": "No Units Yet",
+    "noUnitsHint": "Add your first property to get pricing insights.",
+    "noComparables": "No Comparable Units Found",
+    "noComparablesHint": "We couldn't find similar units in this area. Try adjusting the city or room type.",
+    "marketRange": "Market Price Range",
+    "median": "Median",
+    "suggestedRange": "Suggested Range",
+    "suggestedRangeHint": "Price within this range to stay competitive (25th–75th percentile).",
+    "aiAdvice": "🤖 AI Pricing Advice",
+    "position": {
+      "COMPETITIVE": "Competitive",
+      "BELOW_MARKET": "Below Market",
+      "ABOVE_MARKET": "Above Market",
+      "PREMIUM": "Premium",
+      "NO_DATA": "No Data",
+      "NOT_PROVIDED": "Set a Price"
+    },
+    "positionDesc": {
+      "COMPETITIVE": "Well-priced for your area",
+      "BELOW_MARKET": "You could charge more",
+      "ABOVE_MARKET": "Consider lowering or adding amenities",
+      "PREMIUM": "Significantly above comparable units",
+      "NO_DATA": "No comparable units found",
+      "NOT_PROVIDED": "Add a price to see your market position"
+    },
+    "stats": {
+      "compared": "Compared",
+      "units": "units",
+      "average": "Average",
+      "median": "Median",
+      "minimum": "Minimum",
+      "maximum": "Maximum",
+      "yourPrice": "Your Price",
+      "notSet": "Not set"
+    },
+    "form": {
+      "city": "City",
+      "university": "University (Optional)",
+      "rooms": "Number of Rooms",
+      "price": "Your Price (Optional)",
+      "pricePlaceholder": "e.g. 3000",
+      "roomType": "Room Type",
+      "selectRoomType": "Select room type",
+      "genderType": "Gender Preference",
+      "furnished": "Furnished",
+      "facilities": "Facilities (Optional)",
+      "analyzePrice": "Analyze Pricing",
+      "analyzing": "Analyzing..."
+    },
+    "dashboardCta": "Get Pricing Insights",
+    "dashboardCtaHint": "Use AI to find the optimal price for your properties."
   }
 }

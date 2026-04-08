@@ -646,6 +646,93 @@
     "noMatches": "لا توجد وحدات مطابقة",
     "noMatchesHint": "جرب تعديل تفضيلاتك للعثور على خيارات أكثر.",
     "yes": "نعم",
-    "no": "لا"
+    "no": "لا",
+    "viewRecommendations": "عرض التوصيات الذكية"
+  },
+  "recommendations": {
+    "title": "مقترحات لك",
+    "subtitle": "توصيات ذكية للوحدات مبنية على تفضيلاتك بالذكاء الاصطناعي.",
+    "excellentMatch": "تطابق",
+    "goodMatch": "تطابق",
+    "fairMatch": "تطابق",
+    "weakMatch": "تطابق",
+    "scoreDetails": "تفاصيل التقييم",
+    "whyMatch": "لماذا يناسبك هذا",
+    "noPreferences": "حدد تفضيلاتك أولاً",
+    "noPreferencesHint": "نحتاج تفضيلات السكن الخاصة بك لتقديم توصيات ذكية. يستغرق الأمر دقيقة واحدة فقط!",
+    "setPreferences": "تحديد تفضيلاتي",
+    "noResults": "لا توجد نتائج مطابقة",
+    "noResultsHint": "جرب تعديل تفضيلاتك لاكتشاف خيارات أكثر تناسبك.",
+    "adjustPreferences": "تعديل التفضيلات",
+    "tryAgain": "حاول مرة أخرى",
+    "unitsFound": "توصية موجودة",
+    "score": {
+      "price": "السعر",
+      "location": "الموقع",
+      "facilities": "المرافق",
+      "reviews": "التقييمات",
+      "popularity": "الشعبية"
+    }
+  },
+  "pricing": {
+    "title": "تحليل الأسعار",
+    "subtitle": "تحليل السوق بالذكاء الاصطناعي لمساعدتك في تسعير وحداتك بشكل تنافسي.",
+    "tabs": {
+      "explore": "استكشاف الأسعار",
+      "myUnits": "وحداتي"
+    },
+    "exploreTitle": "تحليل أسعار افتراضي",
+    "getInsight": "تحليل",
+    "noUnits": "لا توجد وحدات بعد",
+    "noUnitsHint": "أضف أول عقار لك للحصول على تحليل الأسعار.",
+    "noComparables": "لا توجد وحدات مشابهة",
+    "noComparablesHint": "لم نتمكن من إيجاد وحدات مشابهة في هذه المنطقة. جرب تغيير المدينة أو نوع الغرفة.",
+    "marketRange": "نطاق أسعار السوق",
+    "median": "الوسيط",
+    "suggestedRange": "النطاق المقترح",
+    "suggestedRangeHint": "سعّر ضمن هذا النطاق للبقاء تنافسياً (المئين 25–75).",
+    "aiAdvice": "🤖 نصيحة تسعير ذكية",
+    "position": {
+      "COMPETITIVE": "تنافسي",
+      "BELOW_MARKET": "أقل من السوق",
+      "ABOVE_MARKET": "أعلى من السوق",
+      "PREMIUM": "مميز",
+      "NO_DATA": "لا توجد بيانات",
+      "NOT_PROVIDED": "حدد سعراً"
+    },
+    "positionDesc": {
+      "COMPETITIVE": "سعر مناسب لمنطقتك",
+      "BELOW_MARKET": "يمكنك رفع السعر",
+      "ABOVE_MARKET": "فكر في خفض السعر أو إضافة مرافق",
+      "PREMIUM": "أعلى بكثير من الوحدات المشابهة",
+      "NO_DATA": "لا توجد وحدات مشابهة",
+      "NOT_PROVIDED": "أضف سعراً لمعرفة موقعك في السوق"
+    },
+    "stats": {
+      "compared": "تمت المقارنة",
+      "units": "وحدة",
+      "average": "المتوسط",
+      "median": "الوسيط",
+      "minimum": "الحد الأدنى",
+      "maximum": "الحد الأقصى",
+      "yourPrice": "سعرك",
+      "notSet": "غير محدد"
+    },
+    "form": {
+      "city": "المدينة",
+      "university": "الجامعة (اختياري)",
+      "rooms": "عدد الغرف",
+      "price": "سعرك (اختياري)",
+      "pricePlaceholder": "مثال: 3000",
+      "roomType": "نوع الغرفة",
+      "selectRoomType": "اختر نوع الغرفة",
+      "genderType": "تفضيل الجنس",
+      "furnished": "مفروشة",
+      "facilities": "المرافق (اختياري)",
+      "analyzePrice": "تحليل السعر",
+      "analyzing": "جارٍ التحليل..."
+    },
+    "dashboardCta": "تحليل الأسعار",
+    "dashboardCtaHint": "استخدم الذكاء الاصطناعي لإيجاد السعر الأمثل لعقاراتك."
   }
 }

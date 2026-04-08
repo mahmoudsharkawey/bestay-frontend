@@ -30,7 +30,9 @@ import MyFavoritesPage from "@/features/favorites/pages/MyFavoritesPage";
 import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 import ProfilePage from "@/features/profile/pages/ProfilePage";
 import UserPreferencePage from "@/features/user-preference/pages/UserPreferencePage";
+import RecommendationsPage from "@/features/user-preference/pages/RecommendationsPage";
 import LandlordDashboard from "@/features/landlord/pages/LandlordDashboard";
+import PricingToolPage from "@/features/pricing/pages/PricingToolPage";
 import NotFoundPage from "@/shared/components/layout/NotFoundPage";
 
 // Admin pages
@@ -70,6 +72,7 @@ export const router = createBrowserRouter([
           { path: "/favorites", element: <MyFavoritesPage /> },
           { path: "/notifications", element: <NotificationsPage /> },
           { path: "/preferences", element: <UserPreferencePage /> },
+          { path: "/recommendations", element: <RecommendationsPage /> },
           { path: "/units/my", element: <MyUnitsPage /> },
           { path: "/units/new", element: <CreateEditUnitPage /> },
           { path: "/units/:id/edit", element: <CreateEditUnitPage /> },
@@ -121,7 +124,10 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        children: [{ path: "/landlord", element: <LandlordDashboard /> }],
+        children: [
+          { path: "/landlord", element: <LandlordDashboard /> },
+          { path: "/pricing", element: <PricingToolPage /> },
+        ],
       },
     ],
   },

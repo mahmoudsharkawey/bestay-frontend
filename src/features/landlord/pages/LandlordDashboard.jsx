@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Building2, Calendar, BookOpen, Plus } from "lucide-react";
+import { Building2, Calendar, BookOpen, Plus, DollarSign } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { useLandlordStats } from "@/features/landlord/hooks/useLandlordStats";
 import { useMyUnits } from "@/features/units/hooks/useMyUnits";
@@ -86,6 +86,24 @@ export default function LandlordDashboard() {
           <RecentVisits visits={visits} isLoading={isLoading} />
           <RecentBookings bookings={bookings} isLoading={isLoading} />
         </div>
+
+        {/* Pricing Insights CTA */}
+        <section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl border border-indigo-200/60 p-6 text-center">
+          <DollarSign className="h-8 w-8 mx-auto mb-3 text-orange" />
+          <h2 className="text-xl font-semibold text-navy mb-2">
+            {t("pricing.dashboardCta")}
+          </h2>
+          <p className="text-slate-500 text-sm mb-4">
+            {t("pricing.dashboardCtaHint")}
+          </p>
+          <a
+            href="/pricing"
+            className="inline-flex items-center gap-2 bg-orange hover:bg-orange/90 text-white font-medium px-6 py-2.5 rounded-full transition-colors"
+          >
+            <DollarSign className="h-4 w-4" />
+            {t("pricing.dashboardCta")}
+          </a>
+        </section>
       </div>
 
       {/* Delete confirmation dialog */}

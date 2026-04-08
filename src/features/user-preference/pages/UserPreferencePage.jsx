@@ -2,10 +2,8 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { useUserPreference } from "@/features/user-preference/hooks/useUserPreference";
-import { useMatchingUnits } from "@/features/user-preference/hooks/useMatchingUnits";
 import UserPreferenceForm from "@/features/user-preference/components/UserPreferenceForm";
 import PreferenceCard from "@/features/user-preference/components/PreferenceCard";
-import MatchingUnitsList from "@/features/user-preference/components/MatchingUnitsList";
 import { Loader2, SlidersHorizontal, Sparkles } from "lucide-react";
 
 export default function UserPreferencePage() {
@@ -20,10 +18,6 @@ export default function UserPreferencePage() {
     deletePreference,
     isPending,
   } = useUserPreference();
-
-  const { units: matchingUnits, isLoading: matchingLoading } = useMatchingUnits(
-    { enabled: !!preference },
-  );
 
   const showForm = !preference || isEditing;
 
@@ -92,19 +86,23 @@ export default function UserPreferencePage() {
           </>
         )}
 
-        {/* Matching Units */}
+        {/* AI Recommendations CTA */}
         {preference && (
-          <section>
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="h-5 w-5 text-orange" />
-              <h2 className="text-xl font-semibold text-navy">
-                {t("preferences.matchingUnits")}
-              </h2>
-            </div>
-            <MatchingUnitsList
-              units={matchingUnits}
-              isLoading={matchingLoading}
-            />
+          <section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl border border-indigo-200/60 p-6 text-center">
+            <Sparkles className="h-8 w-8 mx-auto mb-3 text-orange" />
+            <h2 className="text-xl font-semibold text-navy mb-2">
+              {t("preferences.matchingUnits")}
+            </h2>
+            <p className="text-slate-500 text-sm mb-4">
+              {t("recommendations.subtitle")}
+            </p>
+            <a
+              href="/recommendations"
+              className="inline-flex items-center gap-2 bg-orange hover:bg-orange/90 text-white font-medium px-6 py-2.5 rounded-full transition-colors"
+            >
+              <Sparkles className="h-4 w-4" />
+              {t("preferences.viewRecommendations")}
+            </a>
           </section>
         )}
       </div>
