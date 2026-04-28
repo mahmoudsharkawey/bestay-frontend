@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2, ArrowLeft } from "lucide-react";
 import { Form } from "@/shared/components/ui/form";
 import { Button } from "@/shared/components/ui/button";
 import { useCreateEditUnit } from "@/features/units/hooks/useCreateEditUnit";
@@ -18,6 +18,7 @@ const STEPS = [
 
 function CreateEditForm({ mode, unit }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { form, step, totalSteps, nextStep, prevStep, submitForm, isPending } =
     useCreateEditUnit({ mode, unit });
 
@@ -25,9 +26,20 @@ function CreateEditForm({ mode, unit }) {
     <div className="min-h-screen bg-slate-50 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <h1 className="text-2xl font-bold text-navy mb-2">
-          {mode === "edit" ? t("units.editUnit") : t("units.createUnit")}
-        </h1>
+        <div className="flex items-center mb-6">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="mr-3 -ml-2 text-slate-500 hover:text-navy hover:bg-slate-100"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <h1 className="text-2xl font-bold text-navy">
+            {mode === "edit" ? t("units.editUnit") : t("units.createUnit")}
+          </h1>
+        </div>
 
         {/* Progress steps */}
         <div className="flex items-center gap-2 mb-8 mt-4">

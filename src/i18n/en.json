@@ -29,7 +29,9 @@
     "saving": "Saving...",
     "deleting": "Deleting...",
     "view": "View",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "budget": "Max Budget",
+    "any": "Any"
   },
   "nav": {
     "home": "Home",
@@ -169,14 +171,25 @@
       "title": "Find Your Perfect Home Away From Home",
       "subtitle": "Safe, affordable, and vetted housing for students and expats worldwide. Near universities, fully furnished, and ready for you.",
       "findHousing": "Find Housing",
-      "listProperty": "List Your Property"
+      "listProperty": "List Your Property",
+      "badge": "Your Premium Real Estate Platform",
+      "verified": "Verified Listings",
+      "locations": "Prime Locations",
+      "availableNow": "Available Now",
+      "premium": "Premium Properties"
     },
     "search": {
       "title": "Quick Search",
-      "placeholder": "Enter university or city...",
+      "placeholder": "Where do you want to live?",
       "priceRange": "Price Range",
       "rating": "Rating",
-      "searchBtn": "Search Now"
+      "searchBtn": "Search",
+      "location": "Location",
+      "anyType": "Any type",
+      "singleRoom": "Single Room",
+      "doubleRoom": "Double Room",
+      "sharedRoom": "Shared Room",
+      "studio": "Studio"
     },
     "featured": {
       "title": "Featured Properties",
@@ -186,35 +199,69 @@
       "title": "How It Works",
       "student": {
         "title": "For Students",
-        "step1": "Search: Find verified properties near your university.",
-        "step2": "Visit: Book a physical or virtual visit.",
-        "step3": "Stay: Confirm booking and move in safely."
+        "step1": "Browse our verified property listings tailored to your university location.",
+        "step2": "Schedule a visit or take a virtual tour of your favorite properties.",
+        "step3": "Book securely through our platform and settle into your new home.",
+        "badge": "For Tenants",
+        "step1Title": "Find",
+        "step2Title": "Visit",
+        "step3Title": "Move In"
       },
       "landlord": {
         "title": "For Landlords",
-        "step1": "List: Add your property with details and photos.",
-        "step2": "Approve: Review and approve visit requests.",
-        "step3": "Earn: Get verified tenants and secure payments."
-      }
+        "step1": "Create an attractive listing for your property in just a few minutes.",
+        "step2": "Review applications from verified students and accept the best fit.",
+        "step3": "Receive secure, timely payments directly through our platform.",
+        "badge": "For Property Owners",
+        "step1Title": "List",
+        "step2Title": "Approve",
+        "step3Title": "Earn"
+      },
+      "badge": "Simple Process"
     },
     "benefits": {
-      "title": "Why Choose BeStay?",
+      "title": "The New Standard in Housing",
       "map": {
-        "title": "Map-Based Search",
-        "desc": "Find exactly where you want to live with our interactive map."
+        "title": "Smart Discovery",
+        "desc": "Explore neighborhoods and properties interactively with our advanced mapping technology."
       },
       "verified": {
         "title": "Verified Listings",
-        "desc": "Every property is vetted by our team for safety and quality."
+        "desc": "Every property is rigorously checked to ensure what you see is exactly what you get."
       },
       "booking": {
-        "title": "Easy Booking",
-        "desc": "Seamless process from search to keys in hand."
-      }
+        "title": "Seamless Booking",
+        "desc": "From viewing to signing, experience a frictionless journey to your new home."
+      },
+      "badge": "Why Choose Us"
     },
     "testimonials": {
-      "title": "What Our Community Says",
-      "subtitle": "Join thousands of happy students and landlords."
+      "title": "Trusted by Thousands",
+      "subtitle": "Don't just take our word for it. Here's what our community of students and property owners has to say.",
+      "badge": "Success Stories",
+      "reviews": [
+        {
+          "name": "Ahmed Khalil",
+          "role": "Engineering Student",
+          "location": "Near AOU Campus",
+          "text": "BeStay made it so easy for me to find a safe apartment near my campus. The verified listings gave me absolute peace of mind!",
+          "stars": 5
+        },
+        {
+          "name": "Sarah Jonas",
+          "role": "Property Owner",
+          "location": "Downtown",
+          "text": "As a landlord, I love how clean the interface is and how smooth the booking process flows with BeStay. It completely eliminated my vacancy periods.",
+          "stars": 5
+        },
+        {
+          "name": "Mona Mourad",
+          "role": "Medical Student",
+          "location": "Near AUC Campus",
+          "text": "The map search is incredible. I could see exactly how far my room was from my university lectures. Highly recommend this platform!",
+          "stars": 5
+        }
+      ]
     }
   },
   "validation": {
