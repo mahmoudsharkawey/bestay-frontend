@@ -10,7 +10,7 @@ export function useMyBookings() {
     queryFn: () => bookingsService.getMyBookings(),
   });
 
-  const allBookings = data?.data || [];
+  const allBookings = data?.data?.bookings || data?.data || [];
   const bookings =
     statusFilter === "ALL"
       ? allBookings

@@ -1,9 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { enUS, ar } from "date-fns/locale";
-import { Star, MessageSquare } from "lucide-react";
+import { Star, MessageSquare, Trash2 } from "lucide-react";
 import { useUiStore } from "@/shared/stores/ui.store";
+import { useAuthStore } from "@/shared/stores/auth.store";
 import { useUnitReviews } from "@/features/reviews/hooks/useReviews";
+import { useReviewActions } from "@/features/reviews/hooks/useReviewActions";
+import { Button } from "@/shared/components/ui/button";
 import {
   Avatar,
   AvatarImage,
@@ -15,6 +18,8 @@ export default function ReviewList({ unitId }) {
   const { t } = useTranslation();
   const { language } = useUiStore();
   const dateLocale = language === "ar" ? ar : enUS;
+  const { user } = useAuthStore();
+  const { deleteReview, isDeleting } = useReviewActions(unitId);
 
   const { reviews, isLoading, isError } = useUnitReviews(unitId);
 
@@ -69,9 +74,24 @@ export default function ReviewList({ unitId }) {
         {reviews.map((review) => (
           <div
             key={review.id}
-            className="pb-6 border-b border-slate-50 last:border-0 last:pb-0"
+            className="pb-6 border-b border-slate-50 last:border-0 last:pb-0 relative"
           >
-            <div className="flex items-center gap-3 mb-3">
+            {user?.id === review.userId && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-0 right-0 text-slate-400 hover:text-red-500 hover:bg-red-50 h-8 w-8"
+                onClick={() => {
+                  if (window.confirm(t("reviews.deleteConfirm") || "Are you sure?")) {
+                    deleteReview(review.id);
+                  }
+                }}
+                disabled={isDeleting}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+            <div className="flex items-center gap-3 mb-3 pr-8">
               <Avatar className="h-10 w-10 bg-slate-100 border border-slate-200">
                 <AvatarImage src={review.user?.picture} />
                 <AvatarFallback className="text-sm font-semibold text-slate-500">

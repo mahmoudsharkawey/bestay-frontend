@@ -38,7 +38,7 @@ export default function PaymentHistoryPage() {
   const { t } = useTranslation();
   const { data, isLoading, isError } = usePaymentHistory();
 
-  const payments = data?.data || [];
+  const payments = data?.data?.payments || data?.data || [];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">

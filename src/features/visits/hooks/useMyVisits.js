@@ -14,7 +14,7 @@ export function useMyVisits() {
     queryFn: () => visitsService.getMyVisits(),
   });
 
-  const allVisits = data?.data || [];
+  const allVisits = data?.data?.visits || data?.data || [];
 
   const visits =
     statusFilter === "ALL"

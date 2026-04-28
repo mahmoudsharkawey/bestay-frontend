@@ -13,8 +13,10 @@ export const reviewsService = {
     apiClient.get(`/reviews/my/${unitId}`).then((r) => r.data),
 
   /** USER — Submit a new review */
-  createReview: (reviewData) =>
-    apiClient.post("/reviews", reviewData).then((r) => r.data),
+  createReview: (reviewData) => {
+    const { unitId, ...data } = reviewData;
+    return apiClient.post(`/reviews/unit/${unitId}`, data).then((r) => r.data);
+  },
 
   /** USER — Update an existing review */
   updateReview: (id, reviewData) =>

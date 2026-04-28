@@ -15,7 +15,7 @@ export function useMyFavorites() {
   });
 
   return {
-    favorites: data?.data || [],
+    favorites: data?.data?.favorites || data?.data || [],
     isLoading,
     isError,
   };

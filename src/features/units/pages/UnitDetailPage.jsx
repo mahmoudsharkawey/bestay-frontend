@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -21,7 +22,10 @@ import { useAuthStore } from "@/shared/stores/auth.store";
 import { useCheckIsFavorited } from "@/features/favorites/hooks/useFavorites";
 import { useFavoriteActions } from "@/features/favorites/hooks/useFavoriteActions";
 import ReviewList from "@/features/reviews/components/ReviewList";
+import ReviewForm from "@/features/reviews/components/ReviewForm";
 import LeafletMap from "@/shared/components/LeafletMap";
+import { useCompletedBookingForUnit } from "@/features/bookings/hooks/useCompletedBookingForUnit";
+import { useMyReviewForUnit } from "@/features/reviews/hooks/useReviews";
 
 export default function UnitDetailPage() {
   const { id } = useParams();
@@ -32,6 +36,11 @@ export default function UnitDetailPage() {
 
   const { isFavorited } = useCheckIsFavorited(unit?.id);
   const { toggleFavorite, isPending: isFavoritePending } = useFavoriteActions();
+
+  const { hasCompletedBooking } = useCompletedBookingForUnit(unit?.id);
+  const { myReview } = useMyReviewForUnit(unit?.id);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const isEligibleToReview = isAuthenticated && user?.role === "USER" && hasCompletedBooking;
 
   const handleFavoriteClick = () => {
     if (!isAuthenticated) return navigate("/login");
@@ -329,6 +338,38 @@ export default function UnitDetailPage() {
             )}
 
             {/* Reviews Section */}
+            {isEligibleToReview && !myReview && !showReviewForm && (
+              <div className="mb-6 flex justify-between items-center bg-orange/5 p-4 rounded-xl border border-orange/20">
+                <div>
+                  <h3 className="font-semibold text-navy">How was your stay?</h3>
+                  <p className="text-sm text-slate-500">Share your experience with others.</p>
+                </div>
+                <Button onClick={() => setShowReviewForm(true)} className="bg-orange hover:bg-orange-hover text-white">
+                  {t("reviews.addReview", "Add Review")}
+                </Button>
+              </div>
+            )}
+
+            {isEligibleToReview && myReview && !showReviewForm && (
+              <div className="mb-6 flex justify-between items-center bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div>
+                  <h3 className="font-semibold text-navy">You reviewed this place</h3>
+                  <p className="text-sm text-slate-500">Update or edit your review anytime.</p>
+                </div>
+                <Button onClick={() => setShowReviewForm(true)} variant="outline">
+                  {t("reviews.editReview", "Edit Review")}
+                </Button>
+              </div>
+            )}
+
+            {showReviewForm && (
+              <ReviewForm
+                unitId={unit.id}
+                existingReview={myReview}
+                onCancel={() => setShowReviewForm(false)}
+              />
+            )}
+
             <ReviewList unitId={unit.id} />
           </div>
 
