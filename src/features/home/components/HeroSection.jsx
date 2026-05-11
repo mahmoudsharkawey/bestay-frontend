@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/shared/components/ui/button";
 import { ChevronRight, Home, MapPin, ShieldCheck } from "lucide-react";
+import { useAuthStore } from "@/shared/stores/auth.store";
 
 export default function HeroSection() {
   const { t } = useTranslation();
+  const { user } = useAuthStore();
+
+  const isLandlord = user?.role === "LANDLORD";
+  const isStudent = user?.role === "USER";
 
   return (
     <section className="relative py-16 lg:py-24 overflow-hidden bg-slate-50">
@@ -54,18 +59,22 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
             >
-              <Link to="/units" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full sm:w-auto h-14 px-8 rounded-xl bg-orange hover:bg-orange-hover text-white text-lg font-bold shadow-lg shadow-orange/20 transition-all hover:scale-105 active:scale-95">
-                  {t("home.hero.findHousing")}
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link to="/units/new" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 rounded-xl border-2 border-navy text-navy hover:bg-navy hover:text-white text-lg font-bold transition-all hover:scale-105 active:scale-95">
-                  <Home className="mr-2 h-5 w-5" />
-                  {t("home.hero.listProperty")}
-                </Button>
-              </Link>
+              {!isLandlord && (
+                <Link to="/units" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto h-14 px-8 rounded-xl bg-orange hover:bg-orange-hover text-white text-lg font-bold shadow-lg shadow-orange/20 transition-all hover:scale-105 active:scale-95">
+                    {t("home.hero.findHousing")}
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              )}
+              {!isStudent && (
+                <Link to="/units/new" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 rounded-xl border-2 border-navy text-navy hover:bg-navy hover:text-white text-lg font-bold transition-all hover:scale-105 active:scale-95">
+                    <Home className="mr-2 h-5 w-5" />
+                    {t("home.hero.listProperty")}
+                  </Button>
+                </Link>
+              )}
             </motion.div>
 
             {/* Real Estate Badges */}
